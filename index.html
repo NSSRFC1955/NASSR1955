@@ -51,8 +51,7 @@
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 1s ease-in-out;
-    pointer-events: auto;
-    cursor: pointer;
+    pointer-events: none;
   }
 
   iframe {
@@ -96,7 +95,7 @@ const interval = setInterval(() => {
     // إظهار الشعار تدريجيًا
     logo.style.opacity = 1;
 
-    // تشغيل الموسيقى بعد ظهور الشعار
+    // تشغيل الموسيقى تلقائيًا بعد ظهور الشعار
     music.volume = 0.8;
     music.play().catch(err => console.log(err));
 
