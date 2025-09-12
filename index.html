@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>بث ناديي مع شعار</title>
+<title>بث ناديي مع شعار وموسيقى</title>
 <style>
   body {
     margin: 0;
@@ -50,7 +50,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 1s;
+    transition: opacity 1s ease-in-out;
     pointer-events: none;
   }
 
@@ -63,7 +63,7 @@
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0,0,0,0.6);
     opacity: 0;
-    transition: opacity 1s;
+    transition: opacity 1s ease-in-out;
   }
 </style>
 </head>
@@ -75,22 +75,27 @@
 </div>
 <img id="logo" src="https://i.imgur.com/jm4BZxk.png" alt="شعار النادي">
 
-<iframe id="stream"
-  src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe"
-  allow="autoplay; fullscreen; picture-in-picture;"
-  allowfullscreen>
-</iframe>
+<iframe id="stream" allow="autoplay; fullscreen; picture-in-picture;" allowfullscreen></iframe>
+
+<!-- موسيقى الخلفية -->
+<audio id="bgMusic" src="https://drive.google.com/uc?export=download&id=12zFGy7sqelLnvmL8qBs9eRkxidN8uew4" preload="auto"></audio>
 
 <script>
 // شريط التحميل
 const progress = document.querySelector('.progress');
 const iframe = document.getElementById('stream');
 const logo = document.getElementById('logo');
+const music = document.getElementById('bgMusic');
+
 let width = 0;
 const interval = setInterval(() => {
   if (width >= 100) {
     clearInterval(interval);
     document.querySelector('.loader').style.display = 'none';
+
+    // تشغيل الموسيقى
+    music.volume = 0.8;
+    music.play().catch(err => console.log(err));
 
     // إظهار الشعار تدريجيًا
     logo.style.opacity = 1;
@@ -98,7 +103,10 @@ const interval = setInterval(() => {
     // بعد 2.5 ثانية، اختفاء الشعار وظهور البث
     setTimeout(() => {
       logo.style.opacity = 0;
+      // إيقاف الموسيقى عند ظهور البث
+      music.pause();
       setTimeout(() => {
+        iframe.src = "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe";
         iframe.style.opacity = 1;
       }, 1000);
     }, 2500);
