@@ -79,7 +79,7 @@
 <iframe id="stream" allow="autoplay; fullscreen; picture-in-picture;" allowfullscreen></iframe>
 
 <!-- موسيقى الخلفية -->
-<audio id="bgMusic" src="https://drive.google.com/uc?export=download&id=12zFGy7sqelLnvmL8qBs9eRkxidN8uew4" preload="auto"></audio>
+<audio id="bgMusic" src="https://raw.githubusercontent.com/NSSRFC1955/NASSR1955/main/HIGHLIGHT3.mp3" preload="auto"></audio>
 
 <script>
 const progress = document.querySelector('.progress');
@@ -96,11 +96,9 @@ const interval = setInterval(() => {
     // إظهار الشعار تدريجيًا
     logo.style.opacity = 1;
 
-    // عند النقر على الشعار، تشغيل الموسيقى
-    logo.addEventListener('click', () => {
-      music.volume = 0.8;
-      music.play().catch(err => console.log(err));
-    }, { once: true });
+    // تشغيل الموسيقى بعد ظهور الشعار
+    music.volume = 0.8;
+    music.play().catch(err => console.log(err));
 
     // بعد 2.5 ثانية، اختفاء الشعار وظهور البث
     setTimeout(() => {
@@ -118,6 +116,7 @@ const interval = setInterval(() => {
   }
 }, 20);
 
+// حركة الإضاءة مع الماوس
 const light = document.querySelector('.light');
 document.addEventListener('mousemove', (e) => {
   const x = e.clientX / window.innerWidth * 100;
