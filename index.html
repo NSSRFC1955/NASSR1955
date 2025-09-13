@@ -7,7 +7,7 @@
 <style>
 body {
   margin: 0;
-  background-image: url('https://i.imgur.com/eeMPdjn.jpeg'); /* الخلفية */
+  background-image: url('https://i.imgur.com/eeMPdjn.jpeg');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -16,12 +16,11 @@ body {
   height: 100vh;
   flex-direction: column;
 }
-
 #clickText {
   font-size: 32px;
   color: white;
   background: rgba(0,0,0,0.6);
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
@@ -30,7 +29,10 @@ body {
 #clickText:hover {
   background: rgba(255,255,255,0.2);
 }
-
+#clubLogo {
+  width: 200px;
+  margin-bottom: 20px;
+}
 iframe {
   border: none;
   width: 80%;
@@ -38,37 +40,27 @@ iframe {
   height: 500px;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0,0,0,0.6);
-  display: none; /* مخفي بالبداية */
+  display: none;
 }
 </style>
 </head>
 <body>
-
 <div id="clickText">Click Here</div>
-
-<!-- اغنية مؤقتة (تشتغل 5 ثواني) -->
+<img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
 <audio id="introAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-
 <iframe
   id="liveStream"
   src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe"
   allow="autoplay; fullscreen; picture-in-picture;"
   allowfullscreen
 ></iframe>
-
 <script>
 const clickText = document.getElementById("clickText");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
-
 clickText.addEventListener("click", () => {
-  // تشغيل الأغنية
   introAudio.play();
-
-  // إخفاء النص بعد الضغط
   clickText.style.display = "none";
-
-  // بعد 5 ثواني، إيقاف الأغنية وعرض البث
   setTimeout(() => {
     introAudio.pause();
     introAudio.currentTime = 0;
@@ -76,6 +68,5 @@ clickText.addEventListener("click", () => {
   }, 5000);
 });
 </script>
-
 </body>
 </html>
