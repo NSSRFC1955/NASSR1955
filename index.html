@@ -2,7 +2,6 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="robots" content="noindex, nofollow">
 <title>بث ناديي</title>
 <style>
 body {
@@ -15,24 +14,26 @@ body {
   align-items: center;
   height: 100vh;
   flex-direction: column;
-  transition: background 0.3s;
 }
 
+/* كلمة Click Here باللون الأصفر مع خلفية كحلية */
 #clickText {
   font-size: 36px;
-  color: white;
-  background: rgba(0,0,0,0.7);
+  color: #FFD700; /* أصفر */
+  background: #00008B; /* كحلية غامقة */
   padding: 12px 25px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   margin-bottom: 20px;
-  transition: 0.3s, box-shadow 0.3s;
+  border: 2px solid #1E3A8A; /* حواف كحلية أغمق */
+  transition: 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 #clickText:hover {
   box-shadow: 0 0 20px rgba(255,255,255,0.8);
   transform: scale(1.05);
 }
 
+/* شريط التحميل الذهبي */
 #loadingBarContainer {
   width: 80%;
   max-width: 800px;
@@ -46,10 +47,11 @@ body {
 #loadingBar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FFA500); /* ذهبي متدرج */
+  background: linear-gradient(90deg, #FFD700, #FFA500);
   transition: width 0.05s linear;
 }
 
+/* شعار النادي */
 #clubLogo {
   width: 200px;
   display: none;
@@ -58,6 +60,7 @@ body {
   transition: opacity 1s ease;
 }
 
+/* مشغل البث */
 iframe {
   border: none;
   width: 80%;
@@ -72,9 +75,11 @@ iframe {
 <body>
 
 <div id="clickText">Click Here</div>
+
 <div id="loadingBarContainer">
   <div id="loadingBar"></div>
 </div>
+
 <img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
 
 <audio id="introAudio" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/Chumbawamba%20-%20Tubthumping.mp3"></audio>
@@ -102,7 +107,7 @@ clickText.addEventListener("click", () => {
   loadingBarContainer.style.display = "block";
 
   let progress = 0;
-  const duration = 10000; // 10 ثواني
+  const duration = 10000;
   const intervalTime = 50;
   const increment = (intervalTime / duration) * 100;
 
@@ -112,16 +117,28 @@ clickText.addEventListener("click", () => {
     loadingBar.style.width = progress + "%";
   }, intervalTime);
 
-  // بعد 10 ثواني، إخفاء شريط التحميل وعرض الشعار
   setTimeout(() => {
     clearInterval(interval);
     loadingBarContainer.style.display = "none";
     clubLogo.style.display = "block";
+    clubLogo.style.opacity = 1;
 
-    // بعد ثانية واحدة تقريباً، إخفاء الشعار وعرض البث مع تلاشي الصوت
-    setTimeout(() => {
-      // fade out logo
-      clubLogo.style.opacity = 0;
+    let fadeStep = 0;
+    const fadeInterval = setInterval(() => {
+      fadeStep += 0.05;
+      clubLogo.style.opacity = 1 - fadeStep;
+      introAudio.volume = 1 - fadeStep;
+      if(fadeStep >= 1){
+        clearInterval(fadeInterval);
+        clubLogo.style.display = "none";
+        liveStream.style.display = "block";
+        introAudio.pause();
+        introAudio.currentTime = 0;
+      }
+    }, 100);
+  }, duration);
+});
+</script>
 
-      // fade out audio تدريجيًا
-      const fadeAudio = setInterval(() => {
+</body>
+</html>
