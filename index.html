@@ -16,16 +16,16 @@ body {
   flex-direction: column;
 }
 
-/* كلمة Click Here باللون الأصفر مع خلفية كحلية */
+/* كلمة Click Here باللون الأصفر وخلفية زرقاء قاتمة */
 #clickText {
   font-size: 36px;
   color: #FFD700; /* أصفر */
-  background: #00008B; /* كحلية غامقة */
+  background: #000033; /* أزرق قاتم */
   padding: 12px 25px;
   border-radius: 12px;
   cursor: pointer;
   margin-bottom: 20px;
-  border: 2px solid #1E3A8A; /* حواف كحلية أغمق */
+  border: 2px solid #00008B; /* كحلي غامق */
   transition: 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 #clickText:hover {
@@ -47,7 +47,7 @@ body {
 #loadingBar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FFA500);
+  background: linear-gradient(90deg, #FFD700, #FFA500); /* ذهبي متدرج */
   transition: width 0.05s linear;
 }
 
@@ -106,8 +106,9 @@ clickText.addEventListener("click", () => {
   clickText.style.display = "none";
   loadingBarContainer.style.display = "block";
 
+  // تحريك شريط التحميل
   let progress = 0;
-  const duration = 10000;
+  const duration = 10000; // 10 ثواني
   const intervalTime = 50;
   const increment = (intervalTime / duration) * 100;
 
@@ -117,12 +118,16 @@ clickText.addEventListener("click", () => {
     loadingBar.style.width = progress + "%";
   }, intervalTime);
 
+  // بعد انتهاء الشريط
   setTimeout(() => {
     clearInterval(interval);
     loadingBarContainer.style.display = "none";
+
+    // عرض الشعار
     clubLogo.style.display = "block";
     clubLogo.style.opacity = 1;
 
+    // تلاشي الشعار والصوت تدريجيًا
     let fadeStep = 0;
     const fadeInterval = setInterval(() => {
       fadeStep += 0.05;
@@ -130,12 +135,16 @@ clickText.addEventListener("click", () => {
       introAudio.volume = 1 - fadeStep;
       if(fadeStep >= 1){
         clearInterval(fadeInterval);
-        clubLogo.style.display = "none";
-        liveStream.style.display = "block";
-        introAudio.pause();
-        introAudio.currentTime = 0;
       }
     }, 100);
+
+    // بعد انتهاء التلاشي، إخفاء الشعار وعرض مشغل البث
+    setTimeout(() => {
+      clubLogo.style.display = "none";
+      liveStream.style.display = "block";
+      introAudio.pause();
+      introAudio.currentTime = 0;
+    }, 1200); // وقت كافٍ لتلاشي كامل
   }, duration);
 });
 </script>
