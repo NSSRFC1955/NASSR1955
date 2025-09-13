@@ -79,6 +79,7 @@ body {
   width: 0%;
   height: 100%;
   background: linear-gradient(90deg, #FFD700, #FFA500);
+  transition: width 0.1s linear;
 }
 
 /* شعار النادي */
@@ -153,43 +154,45 @@ clickText.addEventListener("click", () => {
   introAudio.volume = 1;
   introAudio.play();
 
-  // تحديث الشريط باستخدام requestAnimationFrame
-  function updateLoadingBar() {
-    if (overlayVideo.duration > 0) {
-      const progress = (overlayVideo.currentTime / overlayVideo.duration) * 100;
-      loadingBar.style.width = progress + "%";
-    }
-    if (!overlayVideo.ended) {
-      requestAnimationFrame(updateLoadingBar);
+  // مدة ثابتة للشريط والموسيقى (مثلاً 10 ثواني)
+  const duration = 10000; 
+  const startTime = Date.now();
+
+  function animateBar() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min((elapsed / duration) * 100, 100);
+    loadingBar.style.width = progress + "%";
+    if(elapsed < duration) {
+      requestAnimationFrame(animateBar);
+    } else {
+      // انتهاء الشريط والفيديو
+      overlayVideo.pause();
+      overlayVideo.style.display = "none";
+      loadingBarContainer.style.display = "none";
+
+      // عرض شعار النادي
+      clubLogo.style.display = "block";
+      clubLogo.style.opacity = 1;
+
+      // تلاشي شعار النادي والموسيقى
+      let fadeStep = 0;
+      const fadeInterval = setInterval(() => {
+        fadeStep += 0.05;
+        clubLogo.style.opacity = 1 - fadeStep;
+        introAudio.volume = Math.max(0, 1 - fadeStep);
+        if(fadeStep >= 1) clearInterval(fadeInterval);
+      }, 100);
+
+      setTimeout(() => {
+        clubLogo.style.display = "none";
+        liveStream.style.display = "block";
+        introAudio.pause();
+        introAudio.currentTime = 0;
+      }, 1200);
     }
   }
-  requestAnimationFrame(updateLoadingBar);
 
-  overlayVideo.onended = () => {
-    // إخفاء الفيديو والشريط
-    overlayVideo.style.display = "none";
-    loadingBarContainer.style.display = "none";
-
-    // عرض شعار النادي
-    clubLogo.style.display = "block";
-    clubLogo.style.opacity = 1;
-
-    // تلاشي شعار النادي والموسيقى
-    let fadeStep = 0;
-    const fadeInterval = setInterval(() => {
-      fadeStep += 0.05;
-      clubLogo.style.opacity = 1 - fadeStep;
-      introAudio.volume = Math.max(0, 1 - fadeStep);
-      if(fadeStep >= 1) clearInterval(fadeInterval);
-    }, 100);
-
-    setTimeout(() => {
-      clubLogo.style.display = "none";
-      liveStream.style.display = "block";
-      introAudio.pause();
-      introAudio.currentTime = 0;
-    }, 1200);
-  };
+  animateBar();
 });
 </script>
 
