@@ -33,9 +33,10 @@ body {
 #clickIcon {
   position: relative;
   z-index: 3;
-  width: 150px;
-  height: 150px; /* خلفية مربعة */
-  background: #000033; /* خلفية مربعة */
+  width: 200px;  /* حجم المربع */
+  height: 200px; 
+  background: #000033; /* خلفية المربع */
+  border: 4px solid #FFD700; /* stroke أصفر */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,12 +47,12 @@ body {
   overflow: hidden;
 }
 #clickIcon img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 #clickIcon:hover {
-  box-shadow: 0 0 30px #FFD700, 0 0 50px #FFFF00, 0 0 80px #FFA500;
-  transform: scale(1.08);
+  box-shadow: 0 0 40px #FFD700, 0 0 60px #FFFF00, 0 0 100px #FFA500;
+  transform: scale(1.1);
 }
 
 /* فيديو */
