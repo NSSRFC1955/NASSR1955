@@ -47,26 +47,6 @@ body {
   transform: scale(1.08);
 }
 
-/* شريط التحميل الذهبي */
-#loadingBarContainer {
-  position: relative;
-  z-index: 4;
-  width: 80%;
-  max-width: 800px;
-  height: 20px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 10px;
-  overflow: hidden;
-  display: none;
-  margin-top: -30px; /* يظهر فوق الفيديو */
-}
-#loadingBar {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FFA500);
-  transition: width 0.05s linear;
-}
-
 /* فيديو يظهر مثل مشغل البث */
 #overlayVideo {
   position: relative;
@@ -78,6 +58,27 @@ body {
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0,0,0,0.6);
   object-fit: cover;
+  margin-bottom: 10px; /* مساحة للشريط أسفل الفيديو */
+}
+
+/* شريط التحميل الذهبي أسفل الفيديو */
+#loadingBarContainer {
+  position: relative;
+  z-index: 4;
+  width: 80%;
+  max-width: 800px;
+  height: 20px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  display: none;
+  margin-bottom: 20px;
+}
+#loadingBar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+  transition: width 0.05s linear;
 }
 
 /* شعار النادي */
@@ -154,45 +155,47 @@ clickText.addEventListener("click", () => {
   overlayVideo.play();
   loadingBarContainer.style.display = "block";
 
-  // تحريك الشريط
-  let progress = 0;
-  const duration = 10000;
-  const intervalTime = 50;
-  const increment = (intervalTime / duration) * 100;
+  // بعد تحميل الفيديو، نأخذ المدة لتزامن الشريط
+  overlayVideo.onloadedmetadata = () => {
+    const videoDuration = overlayVideo.duration * 1000; // بالملي ثانية
+    let progress = 0;
+    const intervalTime = 50;
+    const increment = (intervalTime / videoDuration) * 100;
 
-  const interval = setInterval(() => {
-    progress += increment;
-    if(progress > 100) progress = 100;
-    loadingBar.style.width = progress + "%";
-  }, intervalTime);
-
-  setTimeout(() => {
-    clearInterval(interval);
-    loadingBarContainer.style.display = "none";
-    overlayVideo.style.display = "none";
-    overlayVideo.pause();
-    overlayVideo.currentTime = 0;
-
-    // عرض شعار النادي
-    clubLogo.style.display = "block";
-    clubLogo.style.opacity = 1;
-
-    let fadeStep = 0;
-    const fadeInterval = setInterval(() => {
-      fadeStep += 0.05;
-      clubLogo.style.opacity = 1 - fadeStep;
-      introAudio.volume = 1 - fadeStep;
-      if(fadeStep >= 1) clearInterval(fadeInterval);
-    }, 100);
+    const interval = setInterval(() => {
+      progress += increment;
+      if(progress > 100) progress = 100;
+      loadingBar.style.width = progress + "%";
+    }, intervalTime);
 
     setTimeout(() => {
-      clubLogo.style.display = "none";
-      liveStream.style.display = "block";
-      introAudio.pause();
-      introAudio.currentTime = 0;
-    }, 1200);
+      clearInterval(interval);
+      loadingBarContainer.style.display = "none";
+      overlayVideo.style.display = "none";
+      overlayVideo.pause();
+      overlayVideo.currentTime = 0;
 
-  }, duration);
+      // عرض شعار النادي
+      clubLogo.style.display = "block";
+      clubLogo.style.opacity = 1;
+
+      let fadeStep = 0;
+      const fadeInterval = setInterval(() => {
+        fadeStep += 0.05;
+        clubLogo.style.opacity = 1 - fadeStep;
+        introAudio.volume = 1 - fadeStep;
+        if(fadeStep >= 1) clearInterval(fadeInterval);
+      }, 100);
+
+      setTimeout(() => {
+        clubLogo.style.display = "none";
+        liveStream.style.display = "block";
+        introAudio.pause();
+        introAudio.currentTime = 0;
+      }, 1200);
+
+    }, videoDuration);
+  };
 });
 </script>
 
