@@ -29,21 +29,16 @@ body {
   transition: background 0.1s;
 }
 
-/* Click Here */
-#clickText {
+/* أيقونة اضغط هنا */
+#clickIcon {
   position: relative;
   z-index: 3;
-  font-size: 36px;
-  color: #FFD700;
-  background: #000033;
-  padding: 12px 25px;
-  border-radius: 12px;
+  width: 150px; /* حجم الأيقونة */
   cursor: pointer;
   margin-bottom: 20px;
-  border: 2px solid #00008B;
   transition: 0.3s, box-shadow 0.3s, transform 0.3s;
 }
-#clickText:hover {
+#clickIcon:hover {
   box-shadow: 0 0 30px #FFD700, 0 0 50px #FFFF00, 0 0 80px #FFA500;
   transform: scale(1.08);
 }
@@ -82,17 +77,6 @@ body {
   transition: width 0.1s linear;
 }
 
-/* شعار النادي */
-#clubLogo {
-  position: relative;
-  z-index: 3;
-  width: 200px;
-  display: none;
-  margin-bottom: 20px;
-  opacity: 1;
-  transition: opacity 1s ease;
-}
-
 /* مشغل البث النهائي */
 iframe {
   position: relative;
@@ -111,7 +95,7 @@ iframe {
 
 <div id="lightEffect"></div>
 
-<div id="clickText">Click Here</div>
+<img id="clickIcon" src="https://i.imgur.com/F3PDYSa.png" alt="اضغط هنا">
 
 <video id="overlayVideo" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/lionassr.mp4" muted></video>
 
@@ -119,9 +103,7 @@ iframe {
   <div id="loadingBar"></div>
 </div>
 
-<img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
-
-<audio id="introAudio" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/Chumbawamba%20-%20Tubthumping.mp3"></audio>
+<audio id="introAudio" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/nassrx.mp3"></audio>
 
 <iframe
   id="liveStream"
@@ -131,11 +113,10 @@ iframe {
 ></iframe>
 
 <script>
-const clickText = document.getElementById("clickText");
+const clickIcon = document.getElementById("clickIcon");
 const overlayVideo = document.getElementById("overlayVideo");
 const loadingBarContainer = document.getElementById("loadingBarContainer");
 const loadingBar = document.getElementById("loadingBar");
-const clubLogo = document.getElementById("clubLogo");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
 const lightEffect = document.getElementById("lightEffect");
@@ -146,16 +127,16 @@ document.addEventListener("mousemove", (e) => {
   lightEffect.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.15), transparent 40%)`;
 });
 
-clickText.addEventListener("click", () => {
-  clickText.style.display = "none";
+clickIcon.addEventListener("click", () => {
+  clickIcon.style.display = "none";
   overlayVideo.style.display = "block";
   loadingBarContainer.style.display = "block";
   overlayVideo.play();
   introAudio.volume = 1;
   introAudio.play();
 
-  // مدة ثابتة للشريط والموسيقى (مثلاً 10 ثواني)
-  const duration = 10000; 
+  // مدة ثابتة 6 ثواني
+  const duration = 6000; 
   const startTime = Date.now();
 
   function animateBar() {
@@ -165,30 +146,15 @@ clickText.addEventListener("click", () => {
     if(elapsed < duration) {
       requestAnimationFrame(animateBar);
     } else {
-      // انتهاء الشريط والفيديو
+      // إخفاء الفيديو والشريط بعد 6 ثواني
       overlayVideo.pause();
       overlayVideo.style.display = "none";
       loadingBarContainer.style.display = "none";
+      introAudio.pause();
+      introAudio.currentTime = 0;
 
-      // عرض شعار النادي
-      clubLogo.style.display = "block";
-      clubLogo.style.opacity = 1;
-
-      // تلاشي شعار النادي والموسيقى
-      let fadeStep = 0;
-      const fadeInterval = setInterval(() => {
-        fadeStep += 0.05;
-        clubLogo.style.opacity = 1 - fadeStep;
-        introAudio.volume = Math.max(0, 1 - fadeStep);
-        if(fadeStep >= 1) clearInterval(fadeInterval);
-      }, 100);
-
-      setTimeout(() => {
-        clubLogo.style.display = "none";
-        liveStream.style.display = "block";
-        introAudio.pause();
-        introAudio.currentTime = 0;
-      }, 1200);
+      // عرض مشغل البث مباشرة
+      liveStream.style.display = "block";
     }
   }
 
