@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>بث ناديي مع شعار وموسيقى</title>
+<title>بث ناديي مع موسيقى وشعارات</title>
 <style>
   body {
     margin: 0;
@@ -42,7 +42,19 @@
     background: linear-gradient(90deg, #fff, #ff0);
   }
 
-  #logo {
+  #clickLogo {
+    position: absolute;
+    max-width: 300px;
+    width: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    cursor: pointer;
+  }
+
+  #clubLogo {
     position: absolute;
     max-width: 300px;
     width: 30%;
@@ -73,17 +85,23 @@
 <div class="loader">
   <div class="progress"></div>
 </div>
-<img id="logo" src="https://i.imgur.com/jm4BZxk.png" alt="شعار النادي">
+
+<!-- لوجو Click Here -->
+<img id="clickLogo" src="https://i.imgur.com/h7tOeeE.png" alt="Click Here">
+
+<!-- شعار النادي -->
+<img id="clubLogo" src="https://i.imgur.com/jm4BZxk.png" alt="شعار النادي">
 
 <iframe id="stream" allow="autoplay; fullscreen; picture-in-picture;" allowfullscreen></iframe>
 
 <!-- موسيقى الخلفية -->
-<audio id="bgMusic" src="https://raw.githubusercontent.com/NSSRFC1955/NASSR1955/main/HIGHLIGHT3.mp3" preload="auto"></audio>
+<audio id="bgMusic" src="https://raw.githubusercontent.com/NSSRFC1955/NASSR1955/main/Chumbawamba%20-%20Tubthumping.mp3" preload="auto"></audio>
 
 <script>
 const progress = document.querySelector('.progress');
+const clickLogo = document.getElementById('clickLogo');
+const clubLogo = document.getElementById('clubLogo');
 const iframe = document.getElementById('stream');
-const logo = document.getElementById('logo');
 const music = document.getElementById('bgMusic');
 
 let width = 0;
@@ -92,28 +110,38 @@ const interval = setInterval(() => {
     clearInterval(interval);
     document.querySelector('.loader').style.display = 'none';
 
-    // إظهار الشعار تدريجيًا
-    logo.style.opacity = 1;
-
-    // تشغيل الموسيقى تلقائيًا بعد ظهور الشعار
-    music.volume = 0.8;
-    music.play().catch(err => console.log(err));
-
-    // بعد 2.5 ثانية، اختفاء الشعار وظهور البث
-    setTimeout(() => {
-      logo.style.opacity = 0;
-      music.pause(); // إيقاف الموسيقى عند ظهور البث
-      setTimeout(() => {
-        iframe.src = "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe";
-        iframe.style.opacity = 1;
-      }, 1000);
-    }, 2500);
-
+    // إظهار لوجو Click Here
+    clickLogo.style.opacity = 1;
   } else {
     width += 1;
     progress.style.width = width + '%';
   }
 }, 20);
+
+// عند الضغط على لوجو Click Here
+clickLogo.addEventListener('click', () => {
+  // تشغيل الموسيقى
+  music.volume = 0.8;
+  music.play().catch(err => console.log('خطأ تشغيل الموسيقى:', err));
+
+  // إخفاء لوجو Click Here
+  clickLogo.style.opacity = 0;
+
+  // إظهار شعار النادي
+  setTimeout(() => {
+    clubLogo.style.opacity = 1;
+  }, 300);
+
+  // بعد ثانيتين: إخفاء الشعار + إيقاف الموسيقى + إظهار البث
+  setTimeout(() => {
+    clubLogo.style.opacity = 0;
+    music.pause();
+    setTimeout(() => {
+      iframe.src = "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe";
+      iframe.style.opacity = 1;
+    }, 1000);
+  }, 2500);
+});
 
 // حركة الإضاءة مع الماوس
 const light = document.querySelector('.light');
