@@ -31,10 +31,10 @@ body {
 /* كلمة Click Here */
 #clickText {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   font-size: 36px;
-  color: #FFD700; /* أصفر */
-  background: #000033; /* أزرق قاتم */
+  color: #FFD700;
+  background: #000033;
   padding: 12px 25px;
   border-radius: 12px;
   cursor: pointer;
@@ -47,24 +47,35 @@ body {
   transform: scale(1.08);
 }
 
-/* شريط النار */
-#fireBarContainer {
+/* شريط التحميل الذهبي */
+#loadingBarContainer {
   position: relative;
   z-index: 2;
   width: 80%;
   max-width: 800px;
-  height: 30px;
+  height: 20px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  overflow: hidden;
   display: none;
   margin-bottom: 20px;
-  overflow: hidden;
-  border-radius: 10px;
 }
-#fireBar {
+#loadingBar {
   width: 0%;
   height: 100%;
-  background: url('https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif') repeat-x;
-  background-size: cover;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
   transition: width 0.05s linear;
+}
+
+/* فيديو فوق الشريط */
+#overlayVideo {
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  max-width: 800px;
+  height: 20px;
+  object-fit: cover;
+  display: none;
 }
 
 /* شعار النادي */
@@ -97,8 +108,10 @@ iframe {
 <div id="lightEffect"></div>
 
 <div id="clickText">Click Here</div>
-<div id="fireBarContainer">
-  <div id="fireBar"></div>
+
+<div id="loadingBarContainer">
+  <div id="loadingBar"></div>
+  <video id="overlayVideo" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/lionassr.mp4" muted autoplay></video>
 </div>
 
 <img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
@@ -114,8 +127,9 @@ iframe {
 
 <script>
 const clickText = document.getElementById("clickText");
-const fireBarContainer = document.getElementById("fireBarContainer");
-const fireBar = document.getElementById("fireBar");
+const loadingBarContainer = document.getElementById("loadingBarContainer");
+const loadingBar = document.getElementById("loadingBar");
+const overlayVideo = document.getElementById("overlayVideo");
 const clubLogo = document.getElementById("clubLogo");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
@@ -133,28 +147,33 @@ clickText.addEventListener("click", () => {
   introAudio.play();
 
   clickText.style.display = "none";
-  fireBarContainer.style.display = "block";
+  loadingBarContainer.style.display = "block";
+  overlayVideo.style.display = "block";
+  overlayVideo.play();
 
-  // حركة شريط النار
+  // تحريك شريط التحميل
   let progress = 0;
-  const duration = 10000;
+  const duration = 10000; // 10 ثواني
   const intervalTime = 50;
   const increment = (intervalTime / duration) * 100;
 
   const interval = setInterval(() => {
     progress += increment;
     if(progress > 100) progress = 100;
-    fireBar.style.width = progress + "%";
+    loadingBar.style.width = progress + "%";
   }, intervalTime);
 
   setTimeout(() => {
     clearInterval(interval);
-    fireBarContainer.style.display = "none";
+    loadingBarContainer.style.display = "none";
+    overlayVideo.style.display = "none";
+    overlayVideo.pause();
+    overlayVideo.currentTime = 0;
 
+    // عرض شعار النادي
     clubLogo.style.display = "block";
     clubLogo.style.opacity = 1;
 
-    // تلاشي الشعار والموسيقى
     let fadeStep = 0;
     const fadeInterval = setInterval(() => {
       fadeStep += 0.05;
