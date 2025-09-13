@@ -14,6 +14,7 @@ body {
   background: url('https://i.imgur.com/eeMPdjn.jpeg') center/cover no-repeat;
   position: relative;
   flex-direction: column;
+  font-family: sans-serif;
 }
 
 /* إضاءة الخلفية عند تحريك الماوس */
@@ -47,7 +48,7 @@ body {
   transform: scale(1.08);
 }
 
-/* فيديو يظهر مثل مشغل البث */
+/* فيديو */
 #overlayVideo {
   position: relative;
   z-index: 3;
@@ -58,10 +59,10 @@ body {
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0,0,0,0.6);
   object-fit: cover;
-  margin-bottom: 10px; /* مساحة للشريط أسفل الفيديو */
+  margin-bottom: 10px;
 }
 
-/* شريط التحميل الذهبي أسفل الفيديو */
+/* شريط التحميل أسفل الفيديو */
 #loadingBarContainer {
   position: relative;
   z-index: 4;
@@ -130,14 +131,15 @@ iframe {
 
 <script>
 const clickText = document.getElementById("clickText");
+const overlayVideo = document.getElementById("overlayVideo");
 const loadingBarContainer = document.getElementById("loadingBarContainer");
 const loadingBar = document.getElementById("loadingBar");
-const overlayVideo = document.getElementById("overlayVideo");
 const clubLogo = document.getElementById("clubLogo");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
 const lightEffect = document.getElementById("lightEffect");
 
+// إضاءة تتحرك مع الماوس
 document.addEventListener("mousemove", (e) => {
   const x = e.clientX / window.innerWidth * 100;
   const y = e.clientY / window.innerHeight * 100;
@@ -147,15 +149,15 @@ document.addEventListener("mousemove", (e) => {
 clickText.addEventListener("click", () => {
   clickText.style.display = "none";
   overlayVideo.style.display = "block";
-  overlayVideo.play();
   loadingBarContainer.style.display = "block";
+  overlayVideo.play();
   introAudio.volume = 1;
   introAudio.play();
 
   overlayVideo.onloadedmetadata = () => {
     const duration = overlayVideo.duration * 1000; // مدة الفيديو بالمللي ثانية
     let progress = 0;
-    const intervalTime = 50; // كل 50ms
+    const intervalTime = 50;
     const increment = (intervalTime / duration) * 100;
 
     const interval = setInterval(() => {
@@ -168,19 +170,22 @@ clickText.addEventListener("click", () => {
     }, intervalTime);
 
     setTimeout(() => {
-      loadingBarContainer.style.display = "none";
+      // إخفاء الفيديو والشريط
       overlayVideo.style.display = "none";
       overlayVideo.pause();
       overlayVideo.currentTime = 0;
+      loadingBarContainer.style.display = "none";
 
+      // عرض شعار النادي
       clubLogo.style.display = "block";
       clubLogo.style.opacity = 1;
 
+      // تلاشي شعار النادي والموسيقى
       let fadeStep = 0;
       const fadeInterval = setInterval(() => {
         fadeStep += 0.05;
         clubLogo.style.opacity = 1 - fadeStep;
-        introAudio.volume = 1 - fadeStep;
+        introAudio.volume = Math.max(0, 1 - fadeStep);
         if(fadeStep >= 1) clearInterval(fadeInterval);
       }, 100);
 
