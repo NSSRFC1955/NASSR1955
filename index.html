@@ -2,153 +2,78 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>بث ناديي مع موسيقى وشعارات</title>
+<meta name="robots" content="noindex, nofollow">
+<title>بث ناديي</title>
 <style>
-  body {
-    margin: 0;
-    background-image: url('https://i.imgur.com/eeMPdjn.jpeg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  background-image: url('https://i.imgur.com/eeMPdjn.jpeg'); /* الخلفية */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
 
-  .light {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3), rgba(255,255,255,0));
-    transition: background-position 0.1s;
-  }
+#clickText {
+  font-size: 32px;
+  color: white;
+  background: rgba(0,0,0,0.6);
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+#clickText:hover {
+  background: rgba(255,255,255,0.2);
+}
 
-  .loader {
-    position: absolute;
-    bottom: 40%;
-    width: 60%;
-    height: 10px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 5px;
-    overflow: hidden;
-  }
-
-  .progress {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #fff, #ff0);
-  }
-
-  #clickLogo {
-    position: absolute;
-    max-width: 300px;
-    width: 30%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    cursor: pointer;
-  }
-
-  #clubLogo {
-    position: absolute;
-    max-width: 300px;
-    width: 30%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    pointer-events: none;
-  }
-
-  iframe {
-    position: relative;
-    border: none;
-    width: 80%;
-    max-width: 900px;
-    height: 500px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.6);
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
+iframe {
+  border: none;
+  width: 80%;
+  max-width: 900px;
+  height: 500px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  display: none; /* مخفي بالبداية */
+}
 </style>
 </head>
 <body>
 
-<div class="light"></div>
-<div class="loader">
-  <div class="progress"></div>
-</div>
+<div id="clickText">Click Here</div>
 
-<!-- لوجو Click Here -->
-<img id="clickLogo" src="https://i.imgur.com/h7tOeeE.png" alt="Click Here">
+<!-- اغنية مؤقتة (تشتغل 5 ثواني) -->
+<audio id="introAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-<!-- شعار النادي -->
-<img id="clubLogo" src="https://i.imgur.com/jm4BZxk.png" alt="شعار النادي">
-
-<iframe id="stream" allow="autoplay; fullscreen; picture-in-picture;" allowfullscreen></iframe>
-
-<!-- موسيقى الخلفية -->
-<audio id="bgMusic" src="https://raw.githubusercontent.com/NSSRFC1955/NASSR1955/main/Chumbawamba%20-%20Tubthumping.mp3" preload="auto"></audio>
+<iframe
+  id="liveStream"
+  src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe"
+  allow="autoplay; fullscreen; picture-in-picture;"
+  allowfullscreen
+></iframe>
 
 <script>
-const progress = document.querySelector('.progress');
-const clickLogo = document.getElementById('clickLogo');
-const clubLogo = document.getElementById('clubLogo');
-const iframe = document.getElementById('stream');
-const music = document.getElementById('bgMusic');
+const clickText = document.getElementById("clickText");
+const introAudio = document.getElementById("introAudio");
+const liveStream = document.getElementById("liveStream");
 
-let width = 0;
-const interval = setInterval(() => {
-  if (width >= 100) {
-    clearInterval(interval);
-    document.querySelector('.loader').style.display = 'none';
+clickText.addEventListener("click", () => {
+  // تشغيل الأغنية
+  introAudio.play();
 
-    // إظهار لوجو Click Here
-    clickLogo.style.opacity = 1;
-  } else {
-    width += 1;
-    progress.style.width = width + '%';
-  }
-}, 20);
+  // إخفاء النص بعد الضغط
+  clickText.style.display = "none";
 
-// عند الضغط على لوجو Click Here
-clickLogo.addEventListener('click', () => {
-  // تشغيل الموسيقى
-  music.volume = 0.8;
-  music.play().catch(err => console.log('خطأ تشغيل الموسيقى:', err));
-
-  // إخفاء لوجو Click Here
-  clickLogo.style.opacity = 0;
-
-  // إظهار شعار النادي
+  // بعد 5 ثواني، إيقاف الأغنية وعرض البث
   setTimeout(() => {
-    clubLogo.style.opacity = 1;
-  }, 300);
-
-  // بعد ثانيتين: إخفاء الشعار + إيقاف الموسيقى + إظهار البث
-  setTimeout(() => {
-    clubLogo.style.opacity = 0;
-    music.pause();
-    setTimeout(() => {
-      iframe.src = "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe";
-      iframe.style.opacity = 1;
-    }, 1000);
-  }, 2500);
-});
-
-// حركة الإضاءة مع الماوس
-const light = document.querySelector('.light');
-document.addEventListener('mousemove', (e) => {
-  const x = e.clientX / window.innerWidth * 100;
-  const y = e.clientY / window.innerHeight * 100;
-  light.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.3), rgba(255,255,255,0))`;
+    introAudio.pause();
+    introAudio.currentTime = 0;
+    liveStream.style.display = "block";
+  }, 5000);
 });
 </script>
 
