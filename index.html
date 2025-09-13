@@ -16,7 +16,7 @@ body {
   flex-direction: column;
 }
 
-/* طبقة الإضاءة على الخلفية */
+/* إضاءة الخلفية عند تحريك الماوس */
 #lightEffect {
   position: absolute;
   top: 0;
@@ -28,7 +28,7 @@ body {
   transition: background 0.1s;
 }
 
-/* كلمة Click Here */
+/* Click Here */
 #clickText {
   position: relative;
   z-index: 3;
@@ -50,7 +50,7 @@ body {
 /* شريط التحميل الذهبي */
 #loadingBarContainer {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   width: 80%;
   max-width: 800px;
   height: 20px;
@@ -58,7 +58,7 @@ body {
   border-radius: 10px;
   overflow: hidden;
   display: none;
-  margin-bottom: 20px;
+  margin-top: -30px; /* يظهر فوق الفيديو */
 }
 #loadingBar {
   width: 0%;
@@ -67,21 +67,23 @@ body {
   transition: width 0.05s linear;
 }
 
-/* فيديو فوق الشريط */
+/* فيديو يظهر مثل مشغل البث */
 #overlayVideo {
-  position: absolute;
-  z-index: 4;
-  width: 100%;
+  position: relative;
+  z-index: 3;
+  width: 80%;
   max-width: 800px;
-  height: 20px;
-  object-fit: cover;
+  height: 300px;
   display: none;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  object-fit: cover;
 }
 
 /* شعار النادي */
 #clubLogo {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 200px;
   display: none;
   margin-bottom: 20px;
@@ -89,10 +91,10 @@ body {
   transition: opacity 1s ease;
 }
 
-/* مشغل البث */
+/* مشغل البث النهائي */
 iframe {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   border: none;
   width: 80%;
   max-width: 900px;
@@ -109,9 +111,10 @@ iframe {
 
 <div id="clickText">Click Here</div>
 
+<video id="overlayVideo" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/lionassr.mp4" muted></video>
+
 <div id="loadingBarContainer">
   <div id="loadingBar"></div>
-  <video id="overlayVideo" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/lionassr.mp4" muted autoplay></video>
 </div>
 
 <img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
@@ -147,13 +150,13 @@ clickText.addEventListener("click", () => {
   introAudio.play();
 
   clickText.style.display = "none";
-  loadingBarContainer.style.display = "block";
   overlayVideo.style.display = "block";
   overlayVideo.play();
+  loadingBarContainer.style.display = "block";
 
-  // تحريك شريط التحميل
+  // تحريك الشريط
   let progress = 0;
-  const duration = 10000; // 10 ثواني
+  const duration = 10000;
   const intervalTime = 50;
   const increment = (intervalTime / duration) * 100;
 
