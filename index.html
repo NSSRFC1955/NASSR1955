@@ -16,6 +16,7 @@ body {
   height: 100vh;
   flex-direction: column;
 }
+
 #clickText {
   font-size: 32px;
   color: white;
@@ -29,10 +30,12 @@ body {
 #clickText:hover {
   background: rgba(255,255,255,0.2);
 }
+
 #clubLogo {
   width: 200px;
   margin-bottom: 20px;
 }
+
 iframe {
   border: none;
   width: 80%;
@@ -45,28 +48,37 @@ iframe {
 </style>
 </head>
 <body>
+
 <div id="clickText">Click Here</div>
 <img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
-<audio id="introAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<audio id="introAudio" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/Chumbawamba%20-%20Tubthumping.mp3"></audio>
+
 <iframe
   id="liveStream"
   src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe"
   allow="autoplay; fullscreen; picture-in-picture;"
   allowfullscreen
 ></iframe>
+
 <script>
 const clickText = document.getElementById("clickText");
+const clubLogo = document.getElementById("clubLogo");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
+
 clickText.addEventListener("click", () => {
   introAudio.play();
   clickText.style.display = "none";
+  clubLogo.style.display = "none";
+
   setTimeout(() => {
     introAudio.pause();
     introAudio.currentTime = 0;
     liveStream.style.display = "block";
-  }, 5000);
+  }, 8000);
 });
 </script>
+
 </body>
 </html>
