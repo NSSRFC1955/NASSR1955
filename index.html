@@ -15,27 +15,51 @@ body {
   align-items: center;
   height: 100vh;
   flex-direction: column;
+  transition: background 0.3s;
 }
 
+/* كلمة Click Here */
 #clickText {
-  font-size: 32px;
+  font-size: 36px;
   color: white;
-  background: rgba(0,0,0,0.6);
-  padding: 10px 20px;
+  background: rgba(0,0,0,0.7);
+  padding: 12px 25px;
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
-  transition: 0.3s;
+  transition: 0.3s, box-shadow 0.3s;
 }
 #clickText:hover {
-  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+  transform: scale(1.05);
 }
 
+/* شريط التحميل */
+#loadingBarContainer {
+  width: 80%;
+  max-width: 800px;
+  height: 20px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  display: none; /* مخفي بالبداية */
+  margin-bottom: 20px;
+}
+#loadingBar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  transition: width 0.1s linear;
+}
+
+/* شعار النادي */
 #clubLogo {
   width: 200px;
+  display: none;
   margin-bottom: 20px;
 }
 
+/* مشغل البث */
 iframe {
   border: none;
   width: 80%;
@@ -49,11 +73,21 @@ iframe {
 </head>
 <body>
 
+<!-- كلمة Click Here -->
 <div id="clickText">Click Here</div>
+
+<!-- شريط التحميل -->
+<div id="loadingBarContainer">
+  <div id="loadingBar"></div>
+</div>
+
+<!-- شعار النادي -->
 <img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
 
+<!-- الأغنية -->
 <audio id="introAudio" src="https://github.com/NSSRFC1955/NASSR1955/raw/main/Chumbawamba%20-%20Tubthumping.mp3"></audio>
 
+<!-- مشغل البث -->
 <iframe
   id="liveStream"
   src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe"
@@ -63,20 +97,48 @@ iframe {
 
 <script>
 const clickText = document.getElementById("clickText");
+const loadingBarContainer = document.getElementById("loadingBarContainer");
+const loadingBar = document.getElementById("loadingBar");
 const clubLogo = document.getElementById("clubLogo");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
 
 clickText.addEventListener("click", () => {
+  // تشغيل الأغنية
   introAudio.play();
-  clickText.style.display = "none";
-  clubLogo.style.display = "none";
 
+  // إخفاء كلمة Click Here
+  clickText.style.display = "none";
+
+  // عرض شريط التحميل
+  loadingBarContainer.style.display = "block";
+
+  let progress = 0;
+  const duration = 10000; // 10 ثواني
+  const intervalTime = 50;
+  const increment = (intervalTime / duration) * 100;
+
+  const interval = setInterval(() => {
+    progress += increment;
+    if(progress > 100) progress = 100;
+    loadingBar.style.width = progress + "%";
+  }, intervalTime);
+
+  // بعد 10 ثواني، إخفاء شريط التحميل، عرض الشعار
   setTimeout(() => {
-    introAudio.pause();
-    introAudio.currentTime = 0;
-    liveStream.style.display = "block";
-  }, 8000);
+    clearInterval(interval);
+    loadingBarContainer.style.display = "none";
+    clubLogo.style.display = "block";
+
+    // بعد ثانية واحدة تقريباً، إخفاء الشعار وعرض البث، وإيقاف الأغنية
+    setTimeout(() => {
+      clubLogo.style.display = "none";
+      liveStream.style.display = "block";
+      introAudio.pause();
+      introAudio.currentTime = 0;
+    }, 1000);
+
+  }, duration);
 });
 </script>
 
