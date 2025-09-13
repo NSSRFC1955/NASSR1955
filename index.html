@@ -78,7 +78,6 @@ body {
   width: 0%;
   height: 100%;
   background: linear-gradient(90deg, #FFD700, #FFA500);
-  transition: width 0.05s linear;
 }
 
 /* شعار النادي */
@@ -139,7 +138,6 @@ const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
 const lightEffect = document.getElementById("lightEffect");
 
-// إضاءة تتحرك مع الماوس
 document.addEventListener("mousemove", (e) => {
   const x = e.clientX / window.innerWidth * 100;
   const y = e.clientY / window.innerHeight * 100;
@@ -147,35 +145,34 @@ document.addEventListener("mousemove", (e) => {
 });
 
 clickText.addEventListener("click", () => {
-  introAudio.volume = 1;
-  introAudio.play();
-
   clickText.style.display = "none";
   overlayVideo.style.display = "block";
   overlayVideo.play();
   loadingBarContainer.style.display = "block";
+  introAudio.volume = 1;
+  introAudio.play();
 
-  // بعد تحميل الفيديو، نأخذ المدة لتزامن الشريط
   overlayVideo.onloadedmetadata = () => {
-    const videoDuration = overlayVideo.duration * 1000; // بالملي ثانية
+    const duration = overlayVideo.duration * 1000; // مدة الفيديو بالمللي ثانية
     let progress = 0;
-    const intervalTime = 50;
-    const increment = (intervalTime / videoDuration) * 100;
+    const intervalTime = 50; // كل 50ms
+    const increment = (intervalTime / duration) * 100;
 
     const interval = setInterval(() => {
       progress += increment;
-      if(progress > 100) progress = 100;
+      if(progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+      }
       loadingBar.style.width = progress + "%";
     }, intervalTime);
 
     setTimeout(() => {
-      clearInterval(interval);
       loadingBarContainer.style.display = "none";
       overlayVideo.style.display = "none";
       overlayVideo.pause();
       overlayVideo.currentTime = 0;
 
-      // عرض شعار النادي
       clubLogo.style.display = "block";
       clubLogo.style.opacity = 1;
 
@@ -194,7 +191,7 @@ clickText.addEventListener("click", () => {
         introAudio.currentTime = 0;
       }, 1200);
 
-    }, videoDuration);
+    }, duration);
   };
 });
 </script>
