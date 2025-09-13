@@ -62,7 +62,7 @@ body {
 #fireBar {
   width: 0%;
   height: 100%;
-  background: url('https://i.imgur.com/9nTQn0G.gif') repeat-x; /* GIF نار */
+  background: url('https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif') repeat-x;
   background-size: cover;
   transition: width 0.05s linear;
 }
@@ -121,7 +121,7 @@ const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
 const lightEffect = document.getElementById("lightEffect");
 
-// تأثير حركة الإضاءة على الخلفية
+// إضاءة تتحرك مع الماوس
 document.addEventListener("mousemove", (e) => {
   const x = e.clientX / window.innerWidth * 100;
   const y = e.clientY / window.innerHeight * 100;
@@ -135,7 +135,7 @@ clickText.addEventListener("click", () => {
   clickText.style.display = "none";
   fireBarContainer.style.display = "block";
 
-  // تحريك شريط النار
+  // حركة شريط النار
   let progress = 0;
   const duration = 10000;
   const intervalTime = 50;
@@ -154,14 +154,13 @@ clickText.addEventListener("click", () => {
     clubLogo.style.display = "block";
     clubLogo.style.opacity = 1;
 
+    // تلاشي الشعار والموسيقى
     let fadeStep = 0;
     const fadeInterval = setInterval(() => {
       fadeStep += 0.05;
       clubLogo.style.opacity = 1 - fadeStep;
       introAudio.volume = 1 - fadeStep;
-      if(fadeStep >= 1){
-        clearInterval(fadeInterval);
-      }
+      if(fadeStep >= 1) clearInterval(fadeInterval);
     }, 100);
 
     setTimeout(() => {
@@ -170,6 +169,7 @@ clickText.addEventListener("click", () => {
       introAudio.pause();
       introAudio.currentTime = 0;
     }, 1200);
+
   }, duration);
 });
 </script>
