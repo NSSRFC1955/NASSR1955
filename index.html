@@ -6,18 +6,32 @@
 <style>
 body {
   margin: 0;
-  background-image: url('https://i.imgur.com/eeMPdjn.jpeg');
-  background-size: cover;
-  background-position: center;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  overflow: hidden;
+  background: url('https://i.imgur.com/eeMPdjn.jpeg') center/cover no-repeat;
+  position: relative;
   flex-direction: column;
 }
 
-/* كلمة Click Here باللون الأصفر وخلفية زرقاء قاتمة */
+/* طبقة الإضاءة فوق الخلفية */
+#lightEffect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1), transparent 40%);
+  transition: background 0.1s;
+}
+
+/* كلمة Click Here */
 #clickText {
+  position: relative;
+  z-index: 2;
   font-size: 36px;
   color: #FFD700; /* أصفر */
   background: #000033; /* أزرق قاتم */
@@ -25,16 +39,18 @@ body {
   border-radius: 12px;
   cursor: pointer;
   margin-bottom: 20px;
-  border: 2px solid #00008B; /* كحلي غامق */
+  border: 2px solid #00008B;
   transition: 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 #clickText:hover {
-  box-shadow: 0 0 20px rgba(255,255,255,0.8);
-  transform: scale(1.05);
+  box-shadow: 0 0 30px #FFD700, 0 0 50px #FFFF00, 0 0 80px #FFA500;
+  transform: scale(1.08);
 }
 
-/* شريط التحميل الذهبي */
+/* شريط التحميل */
 #loadingBarContainer {
+  position: relative;
+  z-index: 2;
   width: 80%;
   max-width: 800px;
   height: 20px;
@@ -47,12 +63,14 @@ body {
 #loadingBar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FFA500); /* ذهبي متدرج */
+  background: linear-gradient(90deg, #FFD700, #FFA500);
   transition: width 0.05s linear;
 }
 
 /* شعار النادي */
 #clubLogo {
+  position: relative;
+  z-index: 2;
   width: 200px;
   display: none;
   margin-bottom: 20px;
@@ -62,6 +80,8 @@ body {
 
 /* مشغل البث */
 iframe {
+  position: relative;
+  z-index: 2;
   border: none;
   width: 80%;
   max-width: 900px;
@@ -74,8 +94,9 @@ iframe {
 </head>
 <body>
 
-<div id="clickText">Click Here</div>
+<div id="lightEffect"></div>
 
+<div id="clickText">Click Here</div>
 <div id="loadingBarContainer">
   <div id="loadingBar"></div>
 </div>
@@ -98,6 +119,14 @@ const loadingBar = document.getElementById("loadingBar");
 const clubLogo = document.getElementById("clubLogo");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
+const lightEffect = document.getElementById("lightEffect");
+
+// تأثير حركة الإضاءة على الخلفية
+document.addEventListener("mousemove", (e) => {
+  const x = e.clientX / window.innerWidth * 100;
+  const y = e.clientY / window.innerHeight * 100;
+  lightEffect.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.15), transparent 40%)`;
+});
 
 clickText.addEventListener("click", () => {
   introAudio.volume = 1;
@@ -118,16 +147,13 @@ clickText.addEventListener("click", () => {
     loadingBar.style.width = progress + "%";
   }, intervalTime);
 
-  // بعد انتهاء الشريط
   setTimeout(() => {
     clearInterval(interval);
     loadingBarContainer.style.display = "none";
 
-    // عرض الشعار
     clubLogo.style.display = "block";
     clubLogo.style.opacity = 1;
 
-    // تلاشي الشعار والصوت تدريجيًا
     let fadeStep = 0;
     const fadeInterval = setInterval(() => {
       fadeStep += 0.05;
@@ -138,13 +164,12 @@ clickText.addEventListener("click", () => {
       }
     }, 100);
 
-    // بعد انتهاء التلاشي، إخفاء الشعار وعرض مشغل البث
     setTimeout(() => {
       clubLogo.style.display = "none";
       liveStream.style.display = "block";
       introAudio.pause();
       introAudio.currentTime = 0;
-    }, 1200); // وقت كافٍ لتلاشي كامل
+    }, 1200);
   }, duration);
 });
 </script>
