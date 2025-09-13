@@ -16,7 +16,7 @@ body {
   flex-direction: column;
 }
 
-/* طبقة الإضاءة فوق الخلفية */
+/* طبقة الإضاءة على الخلفية */
 #lightEffect {
   position: absolute;
   top: 0;
@@ -47,23 +47,23 @@ body {
   transform: scale(1.08);
 }
 
-/* شريط التحميل */
-#loadingBarContainer {
+/* شريط النار */
+#fireBarContainer {
   position: relative;
   z-index: 2;
   width: 80%;
   max-width: 800px;
-  height: 20px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 10px;
-  overflow: hidden;
+  height: 30px;
   display: none;
   margin-bottom: 20px;
+  overflow: hidden;
+  border-radius: 10px;
 }
-#loadingBar {
+#fireBar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FFA500);
+  background: url('https://i.imgur.com/9nTQn0G.gif') repeat-x; /* GIF نار */
+  background-size: cover;
   transition: width 0.05s linear;
 }
 
@@ -97,8 +97,8 @@ iframe {
 <div id="lightEffect"></div>
 
 <div id="clickText">Click Here</div>
-<div id="loadingBarContainer">
-  <div id="loadingBar"></div>
+<div id="fireBarContainer">
+  <div id="fireBar"></div>
 </div>
 
 <img id="clubLogo" src="https://i.imgur.com/F3PDYSa.png" alt="شعار النادي">
@@ -114,8 +114,8 @@ iframe {
 
 <script>
 const clickText = document.getElementById("clickText");
-const loadingBarContainer = document.getElementById("loadingBarContainer");
-const loadingBar = document.getElementById("loadingBar");
+const fireBarContainer = document.getElementById("fireBarContainer");
+const fireBar = document.getElementById("fireBar");
 const clubLogo = document.getElementById("clubLogo");
 const introAudio = document.getElementById("introAudio");
 const liveStream = document.getElementById("liveStream");
@@ -133,23 +133,23 @@ clickText.addEventListener("click", () => {
   introAudio.play();
 
   clickText.style.display = "none";
-  loadingBarContainer.style.display = "block";
+  fireBarContainer.style.display = "block";
 
-  // تحريك شريط التحميل
+  // تحريك شريط النار
   let progress = 0;
-  const duration = 10000; // 10 ثواني
+  const duration = 10000;
   const intervalTime = 50;
   const increment = (intervalTime / duration) * 100;
 
   const interval = setInterval(() => {
     progress += increment;
     if(progress > 100) progress = 100;
-    loadingBar.style.width = progress + "%";
+    fireBar.style.width = progress + "%";
   }, intervalTime);
 
   setTimeout(() => {
     clearInterval(interval);
-    loadingBarContainer.style.display = "none";
+    fireBarContainer.style.display = "none";
 
     clubLogo.style.display = "block";
     clubLogo.style.opacity = 1;
