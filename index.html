@@ -6,7 +6,7 @@
   <title>بث ناديي</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
-  <!-- مكتبة Cloudflare Stream -->
+  <!-- مكتبة Cloudflare Stream Player -->
   <script src="https://cdn.jsdelivr.net/npm/@cloudflare/stream-video-js@0.5.0/dist/stream-video.min.js"></script>
 
   <style>
@@ -52,7 +52,9 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6),
+                  inset 0 2px 5px rgba(255, 255, 255, 0.1),
+                  inset 0 -2px 5px rgba(0, 0, 0, 0.3);
       transition: all 0.3s;
       animation: policeLights 1s infinite;
       z-index: 3;
@@ -61,29 +63,25 @@
     }
     .btn:hover {
       background: linear-gradient(45deg, #000050, #000066);
-      box-shadow: 0 8px 25px rgba(0, 0, 102, 0.7), inset 0 3px 7px rgba(255, 255, 255, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.4);
-    }
-    .btn.fire {
-      animation: fireEffect 1.2s forwards;
-    }
-    .btn img {
-      width: 40px;
-      height: 40px;
-      vertical-align: middle;
+      box-shadow: 0 8px 25px rgba(0, 0, 102, 0.7),
+                  inset 0 3px 7px rgba(255, 255, 255, 0.2),
+                  inset 0 -3px 7px rgba(0, 0, 0, 0.4);
     }
     @keyframes policeLights {
-      0%,100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
-      50% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
+      0%,100% {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6),
+                    inset 0 2px 5px rgba(255, 255, 255, 0.1),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.3),
+                    0 0 20px #FFFF00, 0 0 30px #FFFF00;
+      }
+      50% {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6),
+                    inset 0 2px 5px rgba(255, 255, 255, 0.1),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.3),
+                    0 0 20px #FFD700, 0 0 30px #FFD700;
+      }
     }
-    @keyframes fireEffect {
-      0% { transform: scale(1); opacity: 1; background: linear-gradient(45deg, #000033, #000050); }
-      20% { transform: scale(1.1); opacity: 0.9; background: linear-gradient(45deg, #FF4500, #FF8C00); }
-      40% { transform: scale(1.2); opacity: 0.7; background: linear-gradient(45deg, #FF8C00, #FF6347); }
-      60% { transform: scale(1.1); opacity: 0.5; background: linear-gradient(45deg, #FF6347, #DC143C); }
-      80% { transform: scale(0.9); opacity: 0.3; background: linear-gradient(45deg, #DC143C, #8B0000); }
-      100% { transform: scale(0.5); opacity: 0; background: transparent; }
-    }
-    #player {
+    #playerContainer {
       display: none;
       position: fixed;
       top: 0;
@@ -92,6 +90,29 @@
       height: 100%;
       background: #000;
       z-index: 1000;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #player {
+      width: 80%;
+      height: 70%;
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    #closeBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 20px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #closeBtn:hover {
+      background: #333;
     }
   </style>
 </head>
@@ -102,7 +123,10 @@
     CLICK HERE
   </a>
 
-  <div id="player"></div>
+  <div id="playerContainer">
+    <div id="player"></div>
+    <button id="closeBtn" onclick="closePlayer()">رجوع</button>
+  </div>
 
   <script>
     function moveLight(e) {
@@ -117,26 +141,31 @@
       setTimeout(() => {
         btn.classList.remove('fire');
         startLive();
-      }, 1200);
+      }, 1000);
     }
 
     function startLive() {
-      const container = document.getElementById("player");
-      container.innerHTML = "";
+      const container = document.getElementById("playerContainer");
+      const playerDiv = document.getElementById("player");
+      playerDiv.innerHTML = ""; // تنظيف سابق
 
-      const player = new window.StreamPlayer(container, {
-        src: "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/0d31825b91ca844c347df306ae033ccf/webRTC/play",
-        controls: true,
-        autoplay: true,
-        muted: false
-      });
-
-      container.style.display = "block";
+      try {
+        const player = new window.StreamPlayer(playerDiv, {
+          src: "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/0d31825b91ca844c347df306ae033ccf/webRTC/play",
+          controls: true,
+          autoplay: true,
+          muted: false
+        });
+        container.style.display = "flex";
+      } catch (err) {
+        alert("⚠️ تعذر تحميل المشغل، تأكد أن البث مباشر فعّال في Cloudflare.");
+        console.error(err);
+      }
     }
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') document.getElementById('player').style.display = 'none';
-    });
+    function closePlayer() {
+      document.getElementById("playerContainer").style.display = "none";
+    }
   </script>
 </body>
 </html>
