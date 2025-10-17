@@ -1,160 +1,142 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بث ناديي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بث ناديي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
-    <!-- مكتبة Cloudflare Stream WebRTC -->
-    <script type="module">
-        import { StreamPlayer } from "https://cdn.jsdelivr.net/npm/@cloudflare/stream-video-js@0.5.0/dist/stream-video.min.js";
+  <!-- مكتبة Cloudflare Stream -->
+  <script src="https://cdn.jsdelivr.net/npm/@cloudflare/stream-video-js@0.5.0/dist/stream-video.min.js"></script>
 
-        window.startLive = async function() {
-            const playerDiv = document.getElementById("player");
-            playerDiv.innerHTML = ""; // تنظيف أي محتوى سابق
-
-            // إنشاء المشغل
-            const player = new StreamPlayer(playerDiv, {
-                src: "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/0d31825b91ca844c347df306ae033ccf/webRTC/play",
-                controls: true,
-                autoplay: true,
-                muted: false
-            });
-
-            playerDiv.style.display = "block";
-        };
-    </script>
-
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            background: #1a1a2e url('https://i.imgur.com/68ekHYj.jpeg') no-repeat center center/cover;
-            background-attachment: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-            filter: brightness(1.1) contrast(1.05);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
-            animation: smokeEffect 30s infinite linear;
-        }
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at var(--x) var(--y), rgba(255, 255, 255, 0.2) 0%, transparent 20%);
-            pointer-events: none;
-            transition: background 0.3s;
-            z-index: 1;
-        }
-        @keyframes smokeEffect { 
-            0% { background-position: 0 0; } 
-            100% { background-position: 100% 100%; } 
-        }
-        .btn {
-            background: linear-gradient(45deg, #000033, #000050);
-            color: #FFFF00;
-            padding: 20px 40px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            font: 700 28px 'Roboto', sans-serif;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6),
-                        inset 0 2px 5px rgba(255, 255, 255, 0.1),
-                        inset 0 -2px 5px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-            animation: policeLights 1s infinite;
-            z-index: 3;
-            text-decoration: none;
-            position: relative;
-        }
-        .btn:hover {
-            background: linear-gradient(45deg, #000050, #000066);
-            box-shadow: 0 8px 25px rgba(0, 0, 102, 0.7),
-                        inset 0 3px 7px rgba(255, 255, 255, 0.2),
-                        inset 0 -3px 7px rgba(0, 0, 0, 0.4);
-        }
-        .btn.fire {
-            animation: fireEffect 1.2s forwards;
-        }
-        .btn img {
-            width: 40px;
-            height: 40px;
-            vertical-align: middle;
-        }
-        @keyframes policeLights {
-            0%,100% {
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6),
-                            inset 0 2px 5px rgba(255, 255, 255, 0.1),
-                            inset 0 -2px 5px rgba(0, 0, 0, 0.3),
-                            0 0 20px #FFFF00, 0 0 30px #FFFF00;
-            }
-            50% {
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6),
-                            inset 0 2px 5px rgba(255, 255, 255, 0.1),
-                            inset 0 -2px 5px rgba(0, 0, 0, 0.3),
-                            0 0 20px #FFD700, 0 0 30px #FFD700;
-            }
-        }
-        @keyframes fireEffect {
-            0% { transform: scale(1); opacity: 1; background: linear-gradient(45deg, #000033, #000050); }
-            20% { transform: scale(1.1); opacity: 0.9; background: linear-gradient(45deg, #FF4500, #FF8C00); }
-            40% { transform: scale(1.2); opacity: 0.7; background: linear-gradient(45deg, #FF8C00, #FF6347); }
-            60% { transform: scale(1.1); opacity: 0.5; background: linear-gradient(45deg, #FF6347, #DC143C); }
-            80% { transform: scale(0.9); opacity: 0.3; background: linear-gradient(45deg, #DC143C, #8B0000); }
-            100% { transform: scale(0.5); opacity: 0; background: transparent; }
-        }
-        #player {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 1000;
-        }
-    </style>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #1a1a2e url('https://i.imgur.com/68ekHYj.jpeg') no-repeat center center/cover;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      filter: brightness(1.1) contrast(1.05);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+      animation: smokeEffect 30s infinite linear;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at var(--x) var(--y), rgba(255, 255, 255, 0.2) 0%, transparent 20%);
+      pointer-events: none;
+      transition: background 0.3s;
+      z-index: 1;
+    }
+    @keyframes smokeEffect {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 100%; }
+    }
+    .btn {
+      background: linear-gradient(45deg, #000033, #000050);
+      color: #FFFF00;
+      padding: 20px 40px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      font: 700 28px 'Roboto', sans-serif;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+      animation: policeLights 1s infinite;
+      z-index: 3;
+      text-decoration: none;
+      position: relative;
+    }
+    .btn:hover {
+      background: linear-gradient(45deg, #000050, #000066);
+      box-shadow: 0 8px 25px rgba(0, 0, 102, 0.7), inset 0 3px 7px rgba(255, 255, 255, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.4);
+    }
+    .btn.fire {
+      animation: fireEffect 1.2s forwards;
+    }
+    .btn img {
+      width: 40px;
+      height: 40px;
+      vertical-align: middle;
+    }
+    @keyframes policeLights {
+      0%,100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
+      50% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
+    }
+    @keyframes fireEffect {
+      0% { transform: scale(1); opacity: 1; background: linear-gradient(45deg, #000033, #000050); }
+      20% { transform: scale(1.1); opacity: 0.9; background: linear-gradient(45deg, #FF4500, #FF8C00); }
+      40% { transform: scale(1.2); opacity: 0.7; background: linear-gradient(45deg, #FF8C00, #FF6347); }
+      60% { transform: scale(1.1); opacity: 0.5; background: linear-gradient(45deg, #FF6347, #DC143C); }
+      80% { transform: scale(0.9); opacity: 0.3; background: linear-gradient(45deg, #DC143C, #8B0000); }
+      100% { transform: scale(0.5); opacity: 0; background: transparent; }
+    }
+    #player {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 1000;
+    }
+  </style>
 </head>
 
 <body onmousemove="moveLight(event)">
-    <a href="#" class="btn" onclick="fireButton(event)">
-        <img src="https://i.imgur.com/bZmRIiB.png" alt="Icon">
-        CLICK HERE
-    </a>
+  <a href="#" class="btn" onclick="fireButton(event)">
+    <img src="https://i.imgur.com/bZmRIiB.png" alt="Icon">
+    CLICK HERE
+  </a>
 
-    <div id="player"></div>
+  <div id="player"></div>
 
-    <script>
-        function moveLight(e) {
-            document.body.style.setProperty('--x', `${e.clientX}px`);
-            document.body.style.setProperty('--y', `${e.clientY}px`);
-        }
+  <script>
+    function moveLight(e) {
+      document.body.style.setProperty('--x', `${e.clientX}px`);
+      document.body.style.setProperty('--y', `${e.clientY}px`);
+    }
 
-        function fireButton(e) {
-            e.preventDefault();
-            const btn = e.target.closest('.btn');
-            btn.classList.add('fire');
-            setTimeout(() => {
-                btn.classList.remove('fire');
-                startLive(); // تشغيل بث WebRTC
-            }, 1200);
-        }
+    function fireButton(e) {
+      e.preventDefault();
+      const btn = e.target.closest('.btn');
+      btn.classList.add('fire');
+      setTimeout(() => {
+        btn.classList.remove('fire');
+        startLive();
+      }, 1200);
+    }
 
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape')
-                document.getElementById('player').style.display = 'none';
-        });
-    </script>
+    function startLive() {
+      const container = document.getElementById("player");
+      container.innerHTML = "";
+
+      const player = new window.StreamPlayer(container, {
+        src: "https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/0d31825b91ca844c347df306ae033ccf/webRTC/play",
+        controls: true,
+        autoplay: true,
+        muted: false
+      });
+
+      container.style.display = "block";
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.getElementById('player').style.display = 'none';
+    });
+  </script>
 </body>
 </html>
