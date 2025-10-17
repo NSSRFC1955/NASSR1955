@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع بث المباريات</title>
+    <title>بث ناديي</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             height: 100vh;
-            /* خلفية مؤقتة حتى يتم تحميل الصورة الرئيسية */
             background: #1a1a2e url('https://i.imgur.com/68ekHYj.jpeg') no-repeat center center/cover;
-            background-attachment: fixed; /* تحسين الأداء */
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -60,7 +59,11 @@
         .btn.fire {
             animation: fireEffect 1.2s forwards;
         }
-        .btn img { width: 40px; height: 40px; vertical-align: middle; }
+        .btn img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
         @keyframes policeLights {
             0% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
             50% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
@@ -74,8 +77,21 @@
             80% { transform: scale(0.9); opacity: 0.3; box-shadow: 0 0 50px #DC143C, 0 0 60px #8B0000; background: linear-gradient(45deg, #DC143C, #8B0000); }
             100% { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0 transparent; background: transparent; }
         }
-        #player { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; }
-        #player video { width: 100%; height: 100%; }
+        #player {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1000;
+        }
+        #player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body onmousemove="moveLight(event)">
@@ -84,10 +100,12 @@
         CLICK HERE
     </a>
     <div id="player">
-        <video controls autoplay>
-            <source src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/6081bf8198ae0d5b00a150fa2542666dk0d31825b91ca844c347df306ae033ccf/webRTC/publish" type="video/webm">
-            Your browser does not support the video tag.
-        </video>
+        <iframe
+            id="liveStream"
+            src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe"
+            allow="autoplay; fullscreen; picture-in-picture;"
+            allowfullscreen
+        ></iframe>
     </div>
     <script>
         function moveLight(e) {
