@@ -9,7 +9,9 @@
         body {
             margin: 0;
             height: 100vh;
-            background: url('https://i.imgur.com/68ekHYj.jpeg') no-repeat center center/cover;
+            /* خلفية مؤقتة حتى يتم تحميل الصورة الرئيسية */
+            background: #1a1a2e url('https://i.imgur.com/68ekHYj.jpeg') no-repeat center center/cover;
+            background-attachment: fixed; /* تحسين الأداء */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,7 +21,6 @@
             box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
             animation: smokeEffect 30s infinite linear;
         }
-        body:hover { filter: brightness(1.2) contrast(1.1); }
         body::before {
             content: '';
             position: absolute;
@@ -84,7 +85,7 @@
     </a>
     <div id="player">
         <video controls autoplay>
-            <source src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/0d31825b91ca844c347df306ae033ccf/manifest/video.m3u8" type="application/x-mpegURL">
+            <source src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/6081bf8198ae0d5b00a150fa2542666dk0d31825b91ca844c347df306ae033ccf/webRTC/publish" type="video/webm">
             Your browser does not support the video tag.
         </video>
     </div>
