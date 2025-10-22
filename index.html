@@ -9,13 +9,11 @@
         body {
             margin: 0;
             height: 100vh;
-            /* استبدال الخلفية الصورة بالفيديو في CSS لاحقًا */
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             position: relative;
-            /* إزالة التأثيرات الإضافية مثل smokeEffect لتبسيط الخلفية */
         }
 
         /* الفيديو كخلفية */
@@ -29,14 +27,14 @@
             z-index: -1;
         }
 
-        /* طبقة تظليل لتحسين القراءة فوق الفيديو (اختياري، يمكن إزالته إذا لم يعجبك) */
+        /* طبقة تظليل */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* تظليل خفيف */
+            background: rgba(0, 0, 0, 0.4);
             z-index: -1;
         }
 
@@ -108,6 +106,13 @@
     </style>
 </head>
 <body onmousemove="moveLight(event)">
+    <!-- الفيديو كخلفية -->
+    <video class="video-background" autoplay muted loop>
+        <source src="https://raw.githubusercontent.com/NSSRFC1955/NASSR1955/f1c86c503b25e9e7042beb9b4e5075f7fadfa8ed/%20%20AlNassr_%D9%A1%D9%A1%D9%A11.mp4" type="video/mp4">
+        متصفحك لا يدعم الفيديو.
+    </video>
+    <div class="overlay"></div>
+
     <a href="#" class="btn" onclick="fireButton(event)">
         <img src="https://i.imgur.com/bZmRIiB.png" alt="Icon">
         <span>CLICK HERE</span>
@@ -121,6 +126,7 @@
             ></iframe>
         </div>
     </div>
+
     <script>
         function moveLight(e) {
             document.body.style.setProperty('--x', `${e.clientX}px`);
@@ -129,22 +135,24 @@
         function fireButton(e) {
             e.preventDefault();
             const btn = e.target.closest('.btn');
-            btn.classList.add('fire');
-            setTimeout(() => {
-                btn.classList.remove('fire');
-                document.getElementById('player').style.display = 'block';
-            }, 1200);
+            if (btn) {
+                btn.classList.add('fire');
+                setTimeout(() => {
+                    btn.classList.remove('fire');
+                    const player = document.getElementById('player');
+                    if (player) {
+                        player.style.display = 'block';
+                    } else {
+                        console.log('العنصر #player غير موجود!');
+                    }
+                }, 1200);
+            }
         }
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && document.getElementById('player').style.display === 'block')
+            if (e.key === 'Escape' && document.getElementById('player').style.display === 'block') {
                 document.getElementById('player').style.display = 'none';
-        }
+            }
+        });
     </script>
-    <!-- إضافة الفيديو كخلفية -->
-    <video class="video-background" autoplay muted loop>
-        <source src="https://raw.githubusercontent.com/NSSRFC1955/NASSR1955/f1c86c503b25e9e7042beb9b4e5075f7fadfa8ed/%20%20AlNassr_%D9%A1%D9%A1%D9%A11.mp4" type="video/mp4">
-        متصفحك لا يدعم الفيديو.
-    </video>
-    <div class="overlay"></div>
 </body>
 </html>
