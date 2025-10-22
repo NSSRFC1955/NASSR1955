@@ -36,31 +36,32 @@
             z-index: -1;
         }
         
-        /* 🔥 إضافة تنسيق الحاوية الجديدة 🔥 */
         .content-box {
-            display: flex; /* لمركزة المحتوى داخله */
-            flex-direction: column; /* لترتيب العناصر عمودياً (النص ثم الزر) */
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 30px 40px; /* تباعد داخلي للحاوية */
-            background-color: rgba(0, 0, 0, 0.7); /* الخلفية السوداء الشفافة */
+            padding: 30px 40px;
+            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
             text-align: center;
-            z-index: 2; /* تأكد من أنه فوق الخلفية والفيديو */
+            z-index: 2;
         }
         
-        /* 🔥 تنسيق النص الترحيبي 🔥 */
+        /* 🔥 تعديل الخط ليتناسب مع 'أهلاً وسهلاً بكم' 🔥 */
         .welcome-text {
             color: #ffffff;
             font: 700 36px 'Roboto', sans-serif;
-            margin-bottom: 20px; /* مسافة بين النص والزر */
+            margin-bottom: 20px;
         }
 
-        /* 🔥 تنسيق النص الفرعي 🔥 */
+        /* 🔥 تعديل لتكبير خط 'WELCOME' 🔥 */
         .sub-text {
-            color: #cccccc;
-            font: 400 20px 'Roboto', sans-serif;
-            margin-bottom: 30px; /* مسافة بين النص الفرعي والزر */
+            color: #FFFF00; /* تغيير اللون للفت الانتباه */
+            font: 700 48px 'Roboto', sans-serif; /* زيادة حجم الخط */
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
         }
 
         .btn {
@@ -144,14 +145,15 @@
     <div class="overlay"></div>
 
     <div class="content-box">
-        <div class="welcome-text">مرحباً بك في الموقع</div>
-        <div class="sub-text">الخلفية الآن فيديو متحرك</div>
+        <div class="welcome-text">اهلا وسهلا بكم</div>
+        <div class="sub-text">WELCOME</div>
 
         <a href="#" class="btn" onclick="fireButton(event)">
             <img src="https://i.imgur.com/bZmRIiB.png" alt="Icon">
-            <span>اضغط هنا</span>
+            <span>CLICK HERE</span>
         </a>
     </div>
+    
     <div id="player">
         <div class="video-container">
             <iframe
