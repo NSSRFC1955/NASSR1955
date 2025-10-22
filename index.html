@@ -50,7 +50,10 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3),
+                        0 0 5px rgba(0, 0, 0, 0.2),
+                        inset 0 2px 5px rgba(255, 255, 255, 0.1),
+                        inset 0 -2px 5px rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
             animation: policeLights 1s infinite;
             z-index: 3;
@@ -59,7 +62,10 @@
         }
         .btn:hover {
             background: linear-gradient(45deg, #000050, #000066);
-            box-shadow: 0 8px 25px rgba(0, 0, 102, 0.7), inset 0 3px 7px rgba(255, 255, 255, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4),
+                        0 0 8px rgba(0, 0, 0, 0.3),
+                        inset 0 3px 7px rgba(255, 255, 255, 0.2),
+                        inset 0 -3px 7px rgba(0, 0, 0, 0.4);
         }
         .btn.fire {
             animation: fireEffect 1.2s forwards;
@@ -67,9 +73,9 @@
         .btn img { width: 40px; height: 40px; vertical-align: middle; }
         .btn span { color: #FFFF00; font-weight: 700; }
         @keyframes policeLights {
-            0% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
-            50% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
-            100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
+            0% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
+            50% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
+            100% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
         }
         @keyframes fireEffect {
             0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 transparent; background: linear-gradient(45deg, #000033, #000050); }
@@ -104,7 +110,7 @@
     </style>
 </head>
 <body onmousemove="moveLight(event)">
-    <video class="video-background" autoplay muted loop>
+    <video class="video-background" autoplay muted loop playsinline>
         <source src="https://i.imgur.com/IIC7LaR.mp4" type="video/mp4">
         متصفحك لا يدعم الفيديو.
     </video>
@@ -151,8 +157,17 @@
             }
         });
 
-        // إجبار التكرار إذا لم يعمل loop
+        // إجبار التشغيل على الأجهزة المحمولة
         const video = document.querySelector('.video-background');
+        video.addEventListener('loadeddata', function() {
+            this.play().catch(error => {
+                console.log('فشل التشغيل التلقائي: ', error);
+                // محاولة تشغيل يدوي عند النقر إذا لزم الأمر
+                document.body.addEventListener('touchstart', () => this.play(), { once: true });
+            });
+        });
+
+        // إجبار التكرار
         video.addEventListener('ended', function() {
             this.currentTime = 0;
             this.play();
