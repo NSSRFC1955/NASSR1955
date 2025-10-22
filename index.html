@@ -16,33 +16,30 @@
             color: white;
         }
 
-        /* إزالة الخلفية الصورة واستبدالها بالفيديو */
         .video-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* يملأ الشاشة بدون تشويه */
-            z-index: -1; /* خلف كل شيء */
+            object-fit: cover;
+            z-index: -1;
         }
 
-        /* طبقة تظليل لتحسين القراءة فوق الفيديو */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* تظليل أسود خفيف */
+            background: rgba(0, 0, 0, 0.4);
             z-index: -1;
         }
 
-        /* المحتوى الأمامي (مثل نص أو زر) */
         .content {
             z-index: 2;
             text-align: center;
-            background: rgba(0, 0, 0, 0.5); /* خلفية شفافة للنص */
+            background: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border-radius: 10px;
         }
@@ -63,20 +60,16 @@
     </style>
 </head>
 <body>
-    <!-- الفيديو الخلفية المتحركة (استبدل الرابط الخام هنا) -->
+    <!-- استبدل الرابط الخام هنا -->
     <video class="video-background" autoplay muted loop>
         <source src="https://raw.githubusercontent.com/NSSRFC1955/NASSR1955/f1c86c503b25e9e7042beb9b4e5075f7fadfa8ed/%20%20AlNassr_%D9%A1%D9%A1%D9%A11.mp4" type="video/mp4">
         متصفحك لا يدعم الفيديو.
     </video>
 
-    <!-- طبقة التظليل -->
     <div class="overlay"></div>
 
-    <!-- المحتوى الأمامي -->
     <div class="content">
-        <h1>مرحباً بك في الموقع</h1>
-        <p>الخلفية الآن فيديو متحرك!</p>
-        <button class="btn">اضغط هنا</button>
+        <button class="btn" onclick="alert('تم الضغط على زر Click Here!')">Click Here</button>
     </div>
 
     <script>
