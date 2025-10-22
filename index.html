@@ -36,6 +36,7 @@
             z-index: -1;
         }
         
+        /* 🔥 تم حذف حركات الظهور والتأخير (opacity, transform, animation, animation-delay) 🔥 */
         .content-box {
             display: flex;
             flex-direction: column;
@@ -46,19 +47,18 @@
             border-radius: 10px;
             text-align: center;
             z-index: 2;
+            /* العناصر الآن تظهر فوراً */
         }
         
-        /* 🔥 تعديل الخط ليتناسب مع 'أهلاً وسهلاً بكم' 🔥 */
         .welcome-text {
             color: #ffffff;
             font: 700 36px 'Roboto', sans-serif;
             margin-bottom: 20px;
         }
 
-        /* 🔥 تعديل لتكبير خط 'WELCOME' 🔥 */
         .sub-text {
-            color: #FFFF00; /* تغيير اللون للفت الانتباه */
-            font: 700 48px 'Roboto', sans-serif; /* زيادة حجم الخط */
+            color: #FFFF00;
+            font: 700 48px 'Roboto', sans-serif;
             margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 5px;
@@ -83,10 +83,12 @@
                         inset 0 2px 5px rgba(255, 255, 255, 0.1),
                         inset 0 -2px 5px rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
+            /* 🔥 تم تعديل خاصية animation لإزالة حركة الظهور المتأخرة btnFadeIn وتأخيرها 🔥 */
             animation: policeLights 1s infinite;
             z-index: 3;
             text-decoration: none;
             position: relative;
+            /* العناصر الآن تظهر فوراً */
         }
         .btn:hover {
             background: linear-gradient(45deg, #000050, #000066);
@@ -100,18 +102,18 @@
         }
         .btn img { width: 40px; height: 40px; vertical-align: middle; }
         .btn span { color: #FFFF00; font-weight: 700; }
+
+        /* 🔥 تم حذف @keyframes fadeIn و @keyframes btnFadeIn لأنهما لم يعدا مستخدمين 🔥 */
+
         @keyframes policeLights {
             0% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
             50% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
             100% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
         }
         @keyframes fireEffect {
-            0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 transparent; background: linear-gradient(45deg, #000033, #000050); }
-            20% { transform: scale(1.1); opacity: 0.9; box-shadow: 0 0 20px #FF4500, 0 0 30px #FFA500; background: linear-gradient(45deg, #FF4500, #FF8C00); }
-            40% { transform: scale(1.2); opacity: 0.7; box-shadow: 0 0 30px #FF8C00, 0 0 40px #FF4500; background: linear-gradient(45deg, #FF8C00, #FF6347); }
-            60% { transform: scale(1.1); opacity: 0.5; box-shadow: 0 0 40px #FF6347, 0 0 50px #DC143C; background: linear-gradient(45deg, #FF6347, #DC143C); }
-            80% { transform: scale(0.9); opacity: 0.3; box-shadow: 0 0 50px #DC143C, 0 0 60px #8B0000; background: linear-gradient(45deg, #DC143C, #8B0000); }
-            100% { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0 transparent; background: transparent; }
+            0% { transform: scale(1); opacity: 1; background: linear-gradient(45deg, #000033, #000050); }
+            20% { transform: scale(1.1); opacity: 0.9; background: linear-gradient(45deg, #FF4500, #FF8C00); }
+            100% { transform: scale(0.5); opacity: 0; background: transparent; }
         }
         #player {
             display: none;
@@ -125,7 +127,9 @@
         }
         #player .video-container {
             position: relative;
-            padding-top: 56.25%; /* نسبة 16:9 */
+            width: 100%;
+            height: 100%;
+            padding-top: 0;
         }
         #player iframe {
             border: none;
@@ -158,8 +162,8 @@
         <div class="video-container">
             <iframe
                 src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/0d31825b91ca844c347df306ae033ccf/iframe"
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                allowfullscreen="true"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                allowfullscreen
             ></iframe>
         </div>
     </div>
@@ -179,6 +183,13 @@
                     const player = document.getElementById('player');
                     if (player) {
                         player.style.display = 'block';
+                        
+                        const iframe = player.querySelector('iframe');
+                        if (iframe && iframe.requestFullscreen) {
+                            iframe.requestFullscreen().catch(err => {
+                                console.log("فشل طلب ملء الشاشة (ربما تم حظره بواسطة المتصفح):", err);
+                            });
+                        }
                     } else {
                         console.log('العنصر #player غير موجود!');
                     }
