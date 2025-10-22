@@ -14,7 +14,6 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            /* 🔥 إزالة خاصية visibility: hidden التي تسببت بإخفاء كل شيء 🔥 */
         }
 
         .video-background {
@@ -49,16 +48,14 @@
             z-index: 2;
         }
         
-        .welcome-text {
-            color: #ffffff;
-            font: 700 36px 'Roboto', sans-serif;
-            margin-bottom: 20px;
-        }
-
+        /* 🔥 تم حذف تنسيق .welcome-text لأنه لم يعد مستخدماً 🔥 */
+        
+        /* 🔥 تعديل الهامش لتعويض إزالة النص العلوي 🔥 */
         .sub-text {
             color: #FFFF00;
             font: 700 48px 'Roboto', sans-serif;
-            margin-bottom: 30px;
+            margin-bottom: 30px; 
+            margin-top: 0; /* تأكد من عدم وجود هامش علوي غير ضروري */
             text-transform: uppercase;
             letter-spacing: 5px;
         }
@@ -111,7 +108,6 @@
             100% { transform: scale(0.5); opacity: 0; background: transparent; }
         }
 
-        /* 🔥 المشغل مخفي افتراضياً 🔥 */
         #player {
             display: none; 
             position: fixed;
@@ -121,7 +117,6 @@
             height: 100%;
             background: #000;
             z-index: 1000;
-            /* استخدام فليكس لإظهاره وتوسيعه عند الطلب */
             align-items: center; 
             justify-content: center;
         }
@@ -138,7 +133,6 @@
             border: none;
             height: 100%;
             width: 100%;
-            /* خصائص إضافية لضمان ملء الشاشة */
             min-height: 100vh;
             min-width: 100vw;
         }
@@ -152,7 +146,6 @@
     <div class="overlay"></div>
 
     <div class="content-box">
-        <div class="welcome-text">اهلا وسهلا بكم</div>
         <div class="sub-text">WELCOME</div>
 
         <a href="#" class="btn" onclick="fireButton(event)">
@@ -186,10 +179,8 @@
                     btn.classList.remove('fire');
                     const player = document.getElementById('player');
                     if (player) {
-                        // 🔥 عرض المشغل باستخدام flex لضمان ملء الشاشة 🔥
                         player.style.display = 'flex'; 
                         
-                        // 🔥 طلب ملء الشاشة للعنصر الحاوي (#player) 🔥
                         if (player.requestFullscreen) {
                             player.requestFullscreen().catch(err => {
                                 console.log("فشل طلب ملء الشاشة:", err);
@@ -210,19 +201,15 @@
             }
         });
 
-        // 🔥 حل مشكلة تأخر ظهور المحتوى بعد الخلفية (تم تنظيف المنطق) 🔥
         const video = document.querySelector('.video-background');
         
-        // إجبار التشغيل على الأجهزة المحمولة
         video.addEventListener('loadeddata', function() {
             this.play().catch(error => {
                 console.log('فشل التشغيل التلقائي: ', error);
-                // محاولة تشغيل يدوي عند النقر إذا لزم الأمر
                 document.body.addEventListener('touchstart', () => this.play(), { once: true });
             });
         });
 
-        // إجبار التكرار
         video.addEventListener('ended', function() {
             this.currentTime = 0;
             this.play();
