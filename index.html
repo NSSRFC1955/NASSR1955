@@ -50,7 +50,10 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), /* ظل خفيف حول الزر */
+                        0 0 5px rgba(0, 0, 0, 0.2), /* إضافة لمسة ظل إضافية */
+                        inset 0 2px 5px rgba(255, 255, 255, 0.1), /* ظل داخلي خفيف */
+                        inset 0 -2px 5px rgba(0, 0, 0, 0.3); /* ظل داخلي سفلي */
             transition: all 0.3s;
             animation: policeLights 1s infinite;
             z-index: 3;
@@ -59,7 +62,10 @@
         }
         .btn:hover {
             background: linear-gradient(45deg, #000050, #000066);
-            box-shadow: 0 8px 25px rgba(0, 0, 102, 0.7), inset 0 3px 7px rgba(255, 255, 255, 0.2), inset 0 -3px 7px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), /* زيادة الظل عند التمرير */
+                        0 0 8px rgba(0, 0, 0, 0.3),
+                        inset 0 3px 7px rgba(255, 255, 255, 0.2),
+                        inset 0 -3px 7px rgba(0, 0, 0, 0.4);
         }
         .btn.fire {
             animation: fireEffect 1.2s forwards;
@@ -67,9 +73,9 @@
         .btn img { width: 40px; height: 40px; vertical-align: middle; }
         .btn span { color: #FFFF00; font-weight: 700; }
         @keyframes policeLights {
-            0% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
-            50% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
-            100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
+            0% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
+            50% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFD700, 0 0 30px #FFD700; }
+            100% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.2), inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0.3), 0 0 20px #FFFF00, 0 0 30px #FFFF00; }
         }
         @keyframes fireEffect {
             0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 transparent; background: linear-gradient(45deg, #000033, #000050); }
@@ -101,22 +107,6 @@
             height: 100%;
             width: 100%;
         }
-
-        /* الخلفية الشفافة السوداء حول الزر فقط */
-        .btn-background {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.5); /* سوداء شفافة */
-            width: 130%; /* أكبر من الزر بـ 30% */
-            height: 130%; /* أكبر من الزر بـ 30% */
-            border-radius: 12px; /* مطابق للزر مع إضافة طفيفة */
-            z-index: 2; /* تحت الزر (z-index 3) */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
     </style>
 </head>
 <body onmousemove="moveLight(event)">
@@ -126,12 +116,10 @@
     </video>
     <div class="overlay"></div>
 
-    <div class="btn-background">
-        <a href="#" class="btn" onclick="fireButton(event)">
-            <img src="https://i.imgur.com/bZmRIiB.png" alt="Icon">
-            <span>CLICK HERE</span>
-        </a>
-    </div>
+    <a href="#" class="btn" onclick="fireButton(event)">
+        <img src="https://i.imgur.com/bZmRIiB.png" alt="Icon">
+        <span>CLICK HERE</span>
+    </a>
     <div id="player">
         <div class="video-container">
             <iframe
