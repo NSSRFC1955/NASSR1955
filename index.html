@@ -101,6 +101,19 @@
             height: 100%;
             width: 100%;
         }
+
+        /* الخلفية الشفافة السوداء تحت الزر */
+        .btn-background {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.5); /* سوداء شفافة */
+            width: 120%; /* أكبر من الزر بـ 20% */
+            height: 120%; /* أكبر من الزر بـ 20% */
+            border-radius: 12px; /* مطابق للزر مع إضافة طفيفة */
+            z-index: 2; /* تحت الزر (z-index 3) */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 <body onmousemove="moveLight(event)">
@@ -110,6 +123,7 @@
     </video>
     <div class="overlay"></div>
 
+    <div class="btn-background"></div> <!-- الخلفية الشفافة -->
     <a href="#" class="btn" onclick="fireButton(event)">
         <img src="https://i.imgur.com/bZmRIiB.png" alt="Icon">
         <span>CLICK HERE</span>
