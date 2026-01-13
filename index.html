@@ -34,23 +34,23 @@
             animation: subtle-pan 40s linear infinite;
         }
 
-        /* وميض أقوى وأسرع شوي */
+        /* وميض قوي وواضح جدًا */
         .flash-overlay {
             position: fixed;
             inset: 0;
-            background: white;
+            background: white;           /* أبيض قوي */
             opacity: 0;
             pointer-events: none;
-            z-index: -1;
-            animation: stadium-flash 4.5s infinite;
+            z-index: -1;                 /* تحت الـ overlay الداكن */
+            animation: stadium-flash 4s infinite;
         }
 
         @keyframes stadium-flash {
-            0%, 88%   { opacity: 0; }
-            89%       { opacity: 0.45; }   /* شدة عالية للحظة قصيرة */
-            91%       { opacity: 0.20; }
-            93%       { opacity: 0; }
-            100%      { opacity: 0; }
+            0%, 85%    { opacity: 0; }
+            86%        { opacity: 0.60; }   /* شدة عالية جدًا للحظة */
+            88%        { opacity: 0.25; }
+            90%        { opacity: 0; }
+            100%       { opacity: 0; }
         }
 
         @keyframes subtle-pan {
@@ -64,7 +64,7 @@
         .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.45);
+            background: rgba(0,0,0,0.50);  /* زدنا الظلام شوي عشان الوميض يبرز أكثر */
             z-index: -1;
         }
 
