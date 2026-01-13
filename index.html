@@ -34,7 +34,7 @@
             animation: subtle-pan 40s linear infinite;
         }
 
-        /* تأثير الوميض / الفلاش كل ~5 ثوانٍ */
+        /* وميض أقوى وأسرع شوي */
         .flash-overlay {
             position: fixed;
             inset: 0;
@@ -42,14 +42,14 @@
             opacity: 0;
             pointer-events: none;
             z-index: -1;
-            animation: stadium-flash 5s infinite;
+            animation: stadium-flash 4.5s infinite;
         }
 
         @keyframes stadium-flash {
-            0%, 92%   { opacity: 0; }
-            93%       { opacity: 0.12; }   /* شدة الوميض - يمكن تعديلها */
-            95%       { opacity: 0.04; }
-            97%       { opacity: 0; }
+            0%, 88%   { opacity: 0; }
+            89%       { opacity: 0.45; }   /* شدة عالية للحظة قصيرة */
+            91%       { opacity: 0.20; }
+            93%       { opacity: 0; }
             100%      { opacity: 0; }
         }
 
