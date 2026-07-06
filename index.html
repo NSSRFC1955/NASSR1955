@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Description" content="NASSR1955. Contribute to NSSRFC1955/NASSR1955 development by creating an account on GitHub.">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #131417; -webkit-text-stroke: #131417}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #131417; -webkit-text-stroke: #131417; min-height: 16.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;Live Stream&lt;/title&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>body {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>overflow: hidden;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-family: Arial, sans-serif;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: black;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>/* الخلفية */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.bg {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: radial-gradient(circle at center, #111, #000);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>z-index: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>/* شاشة البداية */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.start-screen {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>position: absolute;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>top: 50%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>left: 50%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>transform: translate(-50%, -50%);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>text-align: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>z-index: 2;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>h1 {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin-bottom: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 40px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>button {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 15px 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 18px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: red;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 10px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>/* مشغل الفيديو */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.player {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>display: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: black;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>z-index: 5;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>iframe {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="bg"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="start-screen" id="startScreen"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;h1&gt;WELCOME&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;button onclick="startStream()"&gt;CLICK HERE&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="player" id="player"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;iframe</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/9eb5063e3634f82962ea487f07521ff8/iframe?autoplay=true"</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>allow="autoplay; fullscreen; encrypted-media"</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>allowfullscreen&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/iframe&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">function startStream() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById("startScreen").style.display = "none";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById("player").style.display = "block";</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
