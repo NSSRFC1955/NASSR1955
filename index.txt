@@ -4,79 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>النصر — البث الرسمي المباشر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=Tajawal:wght@300;400;500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html, body {
-    height: 100%; width: 100%; overflow: hidden; background: #000;
-    font-family: 'Tajawal', sans-serif;
+  :root{
+    --void:#04060d;
+    --void-2:#0a1024;
+    --gold:#f4c430;
+    --gold-soft:#ffe27a;
+    --amber:#ffb100;
+    --navy:#0b1a4d;
+    --ivory:#f5f2e9;
+    --ivory-dim:rgba(245,242,233,0.55);
+  }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; width:100%; height:100%;
+    background:var(--void);
+    overflow:hidden;
+    font-family:'Tajawal', sans-serif;
+    color:var(--ivory);
   }
 
   /* خلفية الفيديو */
   #bgVideo {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     z-index: -2;
-    filter: brightness(0.6) contrast(1.1);
+    filter: brightness(0.65) contrast(1.1);
   }
 
-  .overlay {
-    position: relative;
-    z-index: 2;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-  }
-
-  button {
-    padding: 15px 40px;
-    font-size: 1.3rem;
-    background: #f4c430;
-    color: black;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-</style>
-</head>
-<body>
-
-  <!-- خلفية الفيديو -->
-  <video id="bgVideo" autoplay loop muted playsinline>
-    <source src="NASSR.mp4" type="video/mp4">
-    <source src="./NASSR.mp4" type="video/mp4">
-    <source src="https://raw.githubusercontent.com/nssrfc1955/NASSR1955/main/NASSR.mp4" type="video/mp4">
-  </video>
-
-  <!-- المحتوى الرئيسي -->
-  <div class="overlay">
-    <div>
-      <h1 style="font-size: 2.8rem; margin-bottom: 20px;">النصر — البث الرسمي</h1>
-      <p style="margin-bottom: 30px; font-size: 1.2rem;">جاري رفع الخلفية...</p>
-      <button onclick="document.getElementById('player').style.display='block'">
-        شغل البث
-      </button>
-    </div>
-  </div>
-
-  <!-- مشغل البث -->
-  <iframe id="player" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:10;" 
-    src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe?autoplay=true" 
-    allowfullscreen></iframe>
-
-<script>
-  const video = document.getElementById('bgVideo');
-  
-  video.onloadeddata = () => console.log("✅ تم تحميل الفيديو بنجاح");
-  video.onerror = () => console.error("❌ فشل تحميل الفيديو - تحقق من المسار");
-  
-  console.log("مسار الفيديو:", video.currentSrc);
-</script>
-
-</body>
-</html>
+  #layerBlur{
+    position:fixed; inset:-5%; z-index:-1;
+    background-image:url("data:image/jpeg;base64,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
