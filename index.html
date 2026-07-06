@@ -1,40 +1,32 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النصر — البث الرسمي المباشر</title>
-    <style>
-        body,html{margin:0;padding:0;height:100%;background:#04060d;color:#fff;font-family:sans-serif;overflow:hidden}
-        #crest{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:380px;height:380px;cursor:pointer}
-        #crest img{width:100%;filter:drop-shadow(0 0 60px #f4c430)}
-        #player{position:fixed;inset:0;background:#000;display:none;z-index:100}
-        #player.active{display:block}
-        iframe{width:100%;height:100%;border:none}
-        button{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:#f4c430;color:#000;padding:18px 50px;border:none;border-radius:50px;font-size:1.4rem;font-weight:bold;cursor:pointer;z-index:10}
-        #close{position:fixed;top:30px;right:30px;background:rgba(0,0,0,0.8);color:#fff;border:none;width:50px;height:50px;border-radius:50%;font-size:28px;cursor:pointer;display:none;z-index:200}
-        #close.show{display:block}
-    </style>
-</head>
-<body>
-    <div id="crest"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Al_Nassr_FC_(logo).svg/1024px-Al_Nassr_FC_(logo).svg.png" alt="النصر"></div>
-    <button onclick="openStream()">شاهد البث المباشر ⚽</button>
-    
-    <div id="player">
-        <iframe src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/04708f889a06a2d319b577eda874a075/iframe?autoplay=true" allowfullscreen></iframe>
-    </div>
-    
-    <button id="close" onclick="closeStream()">✕</button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>النصر — البث الرسمي المباشر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=Tajawal:wght@300;400;500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#04060d;
+    --void-2:#0a1024;
+    --gold:#f4c430;
+    --gold-soft:#ffe27a;
+    --amber:#ffb100;
+    --navy:#0b1a4d;
+    --ivory:#f5f2e9;
+    --ivory-dim:rgba(245,242,233,0.55);
+  }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; width:100%; height:100%;
+    background:var(--void);
+    overflow:hidden;
+    font-family:'Tajawal', sans-serif;
+    color:var(--ivory);
+  }
 
-    <script>
-        function openStream(){ 
-            document.getElementById('player').classList.add('active'); 
-            document.getElementById('close').classList.add('show'); 
-        }
-        function closeStream(){ 
-            document.getElementById('player').classList.remove('active'); 
-            document.getElementById('close').classList.remove('show'); 
-        }
-    </script>
-</body>
-</html>
+  #layerBlur{
+    position:fixed; inset:-5%; z-index:0;
+    background-image:url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFBAcGBgYIBwcICxILCwoKCxYPEA0SGhYbGhkWGRgcICgiHB4mHhgZIzAkJiorLS4tGyIyNTEsNSgsLSz/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCz/wAARCAMABUADASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAQIAAwQFBgf/xABJEAABBAECBAQEBAQEBAYBAAsBAAIDEQQhMQUSQVETImFxBhQygSNCkaEzUrHBFSRi0UNy4fAHFiU0U/GCRGMXNXOSssImJ6L/xAAaAQADAQEBAQAAAAAAAAAAAAAAAQIDBAUG/8QANBEAAgIBBAEEAQIFBAIDAQEAAAECEQMEEiExQRMiMlFhcYEUI0KRsQUzodFSwSTh8BXx/9oADAMBAAIRAxEAPwD4Kogj1QIlqKKIAiCiiBhRQUQBFFFECIooogAIqKIAiiiiACooogCKKKJgRRRRAiIoKJgFRBFAERQUQAUbQUQBLRQUQAeqKCKBEUUUQBEUEUARFBRAgopUUxBRQRQBBuigigCfoiEFAgQwUUCiAIih9kUxBFo6oIoAin2UCKYiBFBFAEUUClJgEI/ZAJkCJ9kfsgimIKiilIEFem4A0O+GOMk9GNXmV6j4cIHwzxxp1JjbX7qZIEzzFKIjZGvRWRYAipSlIFZE2qFI0OydEtk6o1+qg9k1eiZNkHooRpsjSlbpisFIOGgTUo4GkqGnyIR+HdapgDQRLfwNuqgFBCQ2yUR0UpNSlJkWLXogR1TEKUih2LSleiaipy+iKCxQO6NWExarIsaWcHwo3P5d6FoCzNW6FKxzaNdUCxw3aR7hBQtKI0a20U3SCxVCPZNVhSkUFi0oR6BNSlICxa9ECO4TUjSB2JXspSalKQKxKQIVhHogQgLEpQpqQr0QOxfspv0RpSkh2L9gp9kaUSoYtIaJiECgqxUCmQpIYNUNU1IUgdg1Q1RQpBQEEVEgAoVFCgYFCookAFFFEDAoih1QA0TuWQEb2rst73jzOtZ2mnilonH4dqWMxqI/ZQNJ2BTAmqnqmEUh2Yf0TjGmP/Dd+iVodMqQWkYU5/JSYcPmP8o+6W5D2syKarcOGvrWRqP+Gd5P2RuQ9jOerIP4i2jhsdayk/ZUmEQz0CSEtyfQbWivJFPCoXQ8NkkwDm3otAw4ALMQ/VG6gUW+jj16KV6LuNggvSJv3R5WNNBjP0S3lemzhchOw/ZMIJTtG4/Zd0HsAB7BQGzodUt4bDjDDyD/AMJw+yYYGQ7Xw12Q8Aa6qCulnTqEbmPYjlf4Zkj6i0X6qt+O+Fw5nA69F2CXXsSPVYs5h5Q6tAd0bmLakZywSFrSas1atbwuJ28h/RVC7a7lPKDZK6MX4g8o0ITboIpMpbwr
