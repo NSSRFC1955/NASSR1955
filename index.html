@@ -8,36 +8,83 @@
 <style>
   body {
     margin: 0;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
   }
 
-  .wrapper {
+  /* الخلفية */
+  .bg {
+    position: fixed;
     width: 100%;
-    max-width: 1000px;
-    aspect-ratio: 16/9;
+    height: 100%;
+    background: radial-gradient(circle, #111, #000);
+    z-index: 0;
+  }
+
+  /* المحتوى الرئيسي */
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    z-index: 2;
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    background: red;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  /* البث */
+  .player {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 5;
   }
 
   iframe {
     width: 100%;
     height: 100%;
-    border: 0;
+    border: none;
   }
 </style>
-
 </head>
+
 <body>
 
-<div class="wrapper">
+<div class="bg"></div>
+
+<div class="center" id="menu">
+  <h1>Welcome</h1>
+  <button onclick="openStream()">CLICK HERE</button>
+</div>
+
+<div class="player" id="player">
   <iframe
-    src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/9eb5063e3634f82962ea487f07521ff8/iframe"
-    allow="autoplay; fullscreen; encrypted-media"
-    allowfullscreen>
+    src="https://customer-tuzc75ya0fkdp6sw.cloudflarestream.com/9eb5063e3634f82962ea487f07521ff8/iframe?autoplay=true"
+    allow="autoplay; fullscreen">
   </iframe>
 </div>
+
+<script>
+function openStream() {
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("player").style.display = "block";
+}
+</script>
 
 </body>
 </html>
